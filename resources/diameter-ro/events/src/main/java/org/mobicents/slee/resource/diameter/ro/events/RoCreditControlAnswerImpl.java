@@ -22,6 +22,7 @@
 
 package org.mobicents.slee.resource.diameter.ro.events;
 
+import net.java.slee.resource.diameter.cca.events.avp.CcRequestType;
 import org.jdiameter.api.Message;
 import org.mobicents.slee.resource.diameter.cca.events.avp.CostInformationAvpImpl;
 

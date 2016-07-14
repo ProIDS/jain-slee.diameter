@@ -22,15 +22,17 @@
 
 package org.mobicents.slee.resource.diameter.ro.events.avp;
 
+import net.java.slee.resource.diameter.cca.events.avp.SubscriptionIdAvp;
 import net.java.slee.resource.diameter.ro.events.avp.ImsInformation;
 import net.java.slee.resource.diameter.ro.events.avp.LcsInformation;
 import net.java.slee.resource.diameter.ro.events.avp.MbmsInformation;
 import net.java.slee.resource.diameter.ro.events.avp.MmsInformation;
 import net.java.slee.resource.diameter.ro.events.avp.PocInformation;
 import net.java.slee.resource.diameter.ro.events.avp.PsInformation;
+import net.java.slee.resource.diameter.ro.events.avp.ServiceGenericInformation;
 import net.java.slee.resource.diameter.ro.events.avp.ServiceInformation;
+import net.java.slee.resource.diameter.ro.events.avp.SmsInformation;
 import net.java.slee.resource.diameter.ro.events.avp.WlanInformation;
-
 import org.mobicents.slee.resource.diameter.base.events.avp.GroupedAvpImpl;
 
 
@@ -59,9 +61,16 @@ public class ServiceInformationImpl extends GroupedAvpImpl implements ServiceInf
     super( code, vendorId, mnd, prt, value );
   }
 
-  /* (non-Javadoc)
-   * @see net.java.slee.resource.diameter.ro.events.avp.ServiceInformation#getImsInformation()
-   */
+    /**
+     * Returns the value of the Subscription-Id AVP, of type Grouped. A return value of null implies that the AVP has not been set.
+     */
+    public SubscriptionIdAvp getSubscriptionId() {
+        throw new UnsupportedOperationException("The Subscription-Id AVP in Service-Information AVP is only used on the Rf interface.");
+    }
+
+    /* (non-Javadoc)
+       * @see net.java.slee.resource.diameter.ro.events.avp.ServiceInformation#getImsInformation()
+       */
   public ImsInformation getImsInformation() {
     return (ImsInformation) getAvpAsCustom(DiameterRoAvpCodes.IMS_INFORMATION, DiameterRoAvpCodes.TGPP_VENDOR_ID, ImsInformationImpl.class);
   }
@@ -109,8 +118,29 @@ public class ServiceInformationImpl extends GroupedAvpImpl implements ServiceInf
   }
 
   /* (non-Javadoc)
-   * @see net.java.slee.resource.diameter.ro.events.avp.ServiceInformation#hasImsInformation()
-   */
+ * @see net.java.slee.resource.diameter.ro.events.avp.ServiceInformation#getSmsInformation()
+ */
+  public SmsInformation getSmsInformation() {
+    return (SmsInformation) getAvpAsCustom(DiameterRoAvpCodes.SMS_INFORMATION, DiameterRoAvpCodes.TGPP_VENDOR_ID, SmsInformationImpl.class);
+  }
+
+  /* (non-Javadoc)
+ * @see net.java.slee.resource.diameter.ro.events.avp.ServiceInformation#getServiceGenericInformation()
+ */
+  public ServiceGenericInformation getServiceGenericInformation() {
+    return (ServiceGenericInformation) getAvpAsCustom(DiameterRoAvpCodes.SERVICE_GENERIC_INFORMATION, DiameterRoAvpCodes.TGPP_VENDOR_ID, ServiceGenericInformationImpl.class);
+  }
+
+    /**
+     * Returns true if the Subscription-ID AVP is present in the message.
+     */
+    public boolean hasSubscriptionId() {
+        throw new UnsupportedOperationException("The Subscription-Id AVP in Service-Information AVP is only used on the Rf interface.");
+    }
+
+    /* (non-Javadoc)
+     * @see net.java.slee.resource.diameter.ro.events.avp.ServiceInformation#hasImsInformation()
+     */
   public boolean hasImsInformation() {
     return hasAvp( DiameterRoAvpCodes.IMS_INFORMATION, DiameterRoAvpCodes.TGPP_VENDOR_ID );
   }
@@ -157,7 +187,31 @@ public class ServiceInformationImpl extends GroupedAvpImpl implements ServiceInf
     return hasAvp( DiameterRoAvpCodes.WLAN_INFORMATION, DiameterRoAvpCodes.TGPP_VENDOR_ID );
   }
 
-  /* (non-Javadoc)
+   /* (non-Javadoc)
+    * @see net.java.slee.resource.diameter.ro.events.avp.ServiceInformation#hasSmsInformation()
+    */
+    public boolean hasSmsInformation() {
+        return hasAvp( DiameterRoAvpCodes.SMS_INFORMATION, DiameterRoAvpCodes.TGPP_VENDOR_ID );
+    }
+
+   /* (non-Javadoc)
+    * @see net.java.slee.resource.diameter.ro.events.avp.ServiceInformation#hasServiceGenericInformation()
+    */
+    public boolean hasServiceGenericInformation() {
+        return hasAvp( DiameterRoAvpCodes.SERVICE_GENERIC_INFORMATION, DiameterRoAvpCodes.TGPP_VENDOR_ID );
+    }
+
+    /**
+     * Sets the value of the Subscription-ID AVP, of type Grouped.
+     *
+     * @param subscriptionId
+     */
+    public void setSubscriptionId(SubscriptionIdAvp subscriptionId) {
+        throw new UnsupportedOperationException("The Subscription-Id AVP in Service-Information AVP is only used on the Rf interface.");
+    }
+
+
+    /* (non-Javadoc)
    * @see net.java.slee.resource.diameter.ro.events.avp.ServiceInformation#setImsInformation(net.java.slee.resource.diameter.ro.events.avp.ImsInformation)
    */
   public void setImsInformation( ImsInformation imsInformation ) {
@@ -205,5 +259,19 @@ public class ServiceInformationImpl extends GroupedAvpImpl implements ServiceInf
   public void setWlanInformation( WlanInformation wlanInformation ) {
     addAvp(DiameterRoAvpCodes.WLAN_INFORMATION, DiameterRoAvpCodes.TGPP_VENDOR_ID, wlanInformation.byteArrayValue());
   }
+
+    /* (non-Javadoc)
+    * @see net.java.slee.resource.diameter.ro.events.avp.ServiceInformation#setSmsInformation(net.java.slee.resource.diameter.ro.events.avp.SmsInformation)
+    */
+    public void setSmsInformation( SmsInformation smsInformation ) {
+        addAvp(DiameterRoAvpCodes.SMS_INFORMATION, DiameterRoAvpCodes.TGPP_VENDOR_ID, smsInformation.byteArrayValue());
+    }
+
+    /* (non-Javadoc)
+    * @see net.java.slee.resource.diameter.ro.events.avp.ServiceInformation#setServiceGenericInformation(net.java.slee.resource.diameter.ro.events.avp.ServiceGenericInformation)
+    */
+    public void setServiceGenericInformation( ServiceGenericInformation serviceGenericInformation ) {
+        addAvp(DiameterRoAvpCodes.SERVICE_GENERIC_INFORMATION, DiameterRoAvpCodes.TGPP_VENDOR_ID, serviceGenericInformation.byteArrayValue());
+    }
 
 }

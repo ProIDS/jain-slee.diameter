@@ -23,37 +23,49 @@
 package net.java.slee.resource.diameter.ro.events.avp;
 
 import net.java.slee.resource.diameter.base.events.avp.GroupedAvp;
+import net.java.slee.resource.diameter.cca.events.avp.SubscriptionIdAvp;
 
 /**
  * Defines an interface representing the Service-Information grouped AVP type.<br>
  * <br>
- * From the Diameter Ro Reference Point Protocol Details (3GPP TS 32.299 V7.1.0) specification:
+ * From the Diameter Ro Reference Point Protocol Details (3GPP TS 32.299 V8.2.0) specification
  * <pre>
- * 7.2.101 Service-Information AVP 
+ * 7.2.149 Service-Information AVP
  * The Service-Information AVP (AVP code 873) is of type Grouped. 
  * Its purpose is to allow the transmission of additional 3GPP service specific information elements which are not
  * described in this document.
  * 
  * It has the following ABNF grammar: 
- *  Service-Information ::= AVP Header: 873 
+ *  Service-Information ::= AVP Header: 873
+ *      [ Subscription-Id ]
  *      [ PS-Information ] 
  *      [ WLAN-Information ] 
  *      [ IMS-Information ] 
  *      [ MMS-Information ] 
  *      [ LCS-Information ] 
  *      [ PoC-Information ]
- *      [ MBMS-Information ] 
+ *      [ MBMS-Information ]
+ *      [ SMS-Information ]
+ *      [ Service-Generic-Information ]
  *      
  *  The format and the contents of the fields inside the Service-Information AVP are specified in the middle-tier
  *  documents which are applicable for the specific service. Note that the formats of the fields are service-specific,
- *  i.e. the format will be different for the various services. Further fields may be included in the 
+ *  i.e. the format will be different for the various services.
+ *  The Subscription-Id AVP in Service-Information AVP is only used on the Rf interface.
+ *  Further fields may be included in the
  *  Service-Information AVP when new services are introduced.
  *  </pre>
  *  
  * @author <a href="mailto:brainslog@gmail.com"> Alexandre Mendonca </a>
  * @author <a href="mailto:baranowb@gmail.com"> Bartosz Baranowski </a>
+ * @author <a href="mailto:grzegorz.figiel@pro-ids.com"> Grzegorz Figiel [ProIDS] </a>
  */
 public interface ServiceInformation extends GroupedAvp {
+
+  /**
+   * Returns the value of the Subscription-Id AVP, of type Grouped. A return value of null implies that the AVP has not been set.
+   */
+  abstract SubscriptionIdAvp getSubscriptionId();
 
   /**
    * Returns the value of the IMS-Information AVP, of type Grouped. A return value of null implies that the AVP has not been set.
@@ -90,6 +102,22 @@ public interface ServiceInformation extends GroupedAvp {
    */
   abstract WlanInformation getWlanInformation();
 
+    /**
+     * Returns the value of the SMS-Information AVP, of type Grouped. A return value of null implies that the AVP has not been set.
+     */
+    abstract SmsInformation getSmsInformation();
+
+    /**
+     * Returns the value of the Service-Generic-Information AVP, of type Grouped. A return value of null implies that the AVP has not been set.
+     */
+    abstract ServiceGenericInformation getServiceGenericInformation();
+
+
+    /**
+     * Returns true if the Subscription-ID AVP is present in the message.
+     */
+    abstract boolean hasSubscriptionId();
+
   /**
    * Returns true if the IMS-Information AVP is present in the message.
    */
@@ -125,6 +153,21 @@ public interface ServiceInformation extends GroupedAvp {
    */
   abstract boolean hasWlanInformation();
 
+    /**
+     * Returns true if the SMS-Information AVP is present in the message.
+     */
+    abstract boolean hasSmsInformation();
+
+    /**
+     * Returns true if the Service-Generic-Information AVP is present in the message.
+     */
+    abstract boolean hasServiceGenericInformation();
+
+    /**
+     * Sets the value of the Subscription-ID AVP, of type Grouped.
+     */
+    abstract void setSubscriptionId(SubscriptionIdAvp subscriptionId);
+
   /**
    * Sets the value of the IMS-Information AVP, of type Grouped.
    */
@@ -159,5 +202,15 @@ public interface ServiceInformation extends GroupedAvp {
    * Sets the value of the WLAN-Information AVP, of type Grouped.
    */
   abstract void setWlanInformation(WlanInformation wlanInformation);
+
+    /**
+     * Sets the value of the SMS-Information AVP, of type Grouped.
+     */
+    abstract void setSmsInformation(SmsInformation smsInformation);
+
+    /**
+     * Sets the value of the Service-Generic-Information AVP, of type Grouped.
+     */
+    abstract void setServiceGenericInformation(ServiceGenericInformation serviceGenericInformation);
 
 }

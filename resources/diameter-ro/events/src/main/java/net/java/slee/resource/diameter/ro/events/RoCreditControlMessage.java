@@ -26,7 +26,7 @@ import net.java.slee.resource.diameter.base.events.DiameterMessage;
 import net.java.slee.resource.diameter.base.events.avp.DiameterIdentity;
 import net.java.slee.resource.diameter.base.events.avp.ProxyInfoAvp;
 import net.java.slee.resource.diameter.cca.events.avp.CcRequestType;
-import net.java.slee.resource.diameter.cca.events.avp.MultipleServicesCreditControlAvp;
+import net.java.slee.resource.diameter.ro.events.avp.MultipleServicesCreditControl;
 import net.java.slee.resource.diameter.ro.events.avp.ServiceInformation;
 
 /**
@@ -74,7 +74,15 @@ public interface RoCreditControlMessage extends DiameterMessage {
    */
   void setCcRequestNumber(long ccRequestNumber) throws IllegalStateException;
 
-  /**
+    /**
+     * Sets the value of the CC-Request-Number AVP, of type Unsigned32.
+     * Alternative method for {@link #setCcRequestNumber(long ccRequestNumber) setCcRequestNumber(long ccRequestNumber)}
+     *
+     * @param ccRequestNumber
+     * @throws IllegalStateException
+     */void setCreditControlRequestNumber(long ccRequestNumber) throws IllegalStateException;
+
+    /**
    * Returns true if the CC-Request-Number AVP is present in the message.
    * 
    * @return
@@ -97,6 +105,15 @@ public interface RoCreditControlMessage extends DiameterMessage {
   void setCcRequestType(CcRequestType ccRequestType) throws IllegalStateException;
 
   /**
+   * Sets the value of the CC-Request-Type AVP, of type Enumerated.
+   * Alternative method for {@link #setCcRequestType(CcRequestType ccRequestType) setCcRequestType}
+   *
+   * @param ccRequestType
+   * @throws IllegalStateException
+   */
+  void setCreditControlRequestType(CcRequestType ccRequestType) throws IllegalStateException;
+
+  /**
    * Returns true if the CC-Request-Type AVP is present in the message.
    * 
    * @return
@@ -115,7 +132,7 @@ public interface RoCreditControlMessage extends DiameterMessage {
    * 
    * @return
    */
-  MultipleServicesCreditControlAvp[] getMultipleServicesCreditControls();
+  MultipleServicesCreditControl[] getMultipleServicesCreditControls();
 
   /**
    * Sets a single Multiple-Services-Credit-Control AVP in the message, of
@@ -124,7 +141,7 @@ public interface RoCreditControlMessage extends DiameterMessage {
    * @param multipleServicesCreditControl
    * @throws IllegalStateException
    */
-  void setMultipleServicesCreditControl(MultipleServicesCreditControlAvp multipleServicesCreditControl) throws IllegalStateException;
+  void setMultipleServicesCreditControl(MultipleServicesCreditControl multipleServicesCreditControl) throws IllegalStateException;
 
   /**
    * Sets the set of Multiple-Services-Credit-Control AVPs, with all the
@@ -133,7 +150,7 @@ public interface RoCreditControlMessage extends DiameterMessage {
    * @param multipleServicesCreditControls
    * @throws IllegalStateException
    */
-  void setMultipleServicesCreditControls(MultipleServicesCreditControlAvp[] multipleServicesCreditControls) throws IllegalStateException;
+  void setMultipleServicesCreditControls(MultipleServicesCreditControl[] multipleServicesCreditControls) throws IllegalStateException;
 
   /**
    * Returns the set of Proxy-Info AVPs.
@@ -184,22 +201,22 @@ public interface RoCreditControlMessage extends DiameterMessage {
 
 
   /**
-   * Returns the value of the CC-Request-Type AVP, of type Enumerated.
+   * Returns the value of the Service-Information AVP, of type Grouped.
    * 
    * @return
    */
   ServiceInformation getServiceInformation();
 
   /**
-   * Sets the value of the CC-Request-Type AVP, of type Enumerated.
+   * Sets the value of the Service-Information AVP, of type Enumerated.
    * 
-   * @param ServiceInformation
+   * @param si ServiceInformation
    * @throws IllegalStateException
    */
   void setServiceInformation(ServiceInformation si) throws IllegalStateException;
 
   /**
-   * Returns true if the CC-Request-Type AVP is present in the message.
+   * Returns true if the Service-Information AVP is present in the message.
    * 
    * @return
    */

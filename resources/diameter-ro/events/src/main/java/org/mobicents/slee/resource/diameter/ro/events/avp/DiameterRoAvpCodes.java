@@ -83,6 +83,8 @@ public class DiameterRoAvpCodes
   public static final DiameterAvpType ADDRESSEE_TYPE_AVP_TYPE = DiameterAvpType.fromString("Enumerated");
   public static final int APPLIC_ID = 1218;
   public static final DiameterAvpType APPLIC_ID_AVP_TYPE = DiameterAvpType.fromString("UTF8String");
+	public static final int ALTERNATE_CHARGED_PARTY_ADDRESS = 1280;
+	public static final DiameterAvpType ALTERNATE_CHARGED_PARTY_ADDRESS_AVP_TYPE = DiameterAvpType.fromString("UTF8String");
   public static final int APPLICATION_PROVIDED_CALLED_PARTY_ADDRESS = 837;
   public static final DiameterAvpType APPLICATION_PROVIDED_CALLED_PARTY_ADDRESS_AVP_TYPE = DiameterAvpType.fromString("UTF8String");
   public static final int APPLICATION_SERVER = 836;

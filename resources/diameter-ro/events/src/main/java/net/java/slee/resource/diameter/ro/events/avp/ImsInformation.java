@@ -28,38 +28,49 @@ import net.java.slee.resource.diameter.base.events.avp.GroupedAvp;
 /**
  * Defines an interface representing the IMS-Information grouped AVP type.<br>
  * <br> 
- * From the Diameter Ro Reference Point Protocol Details (3GPP TS 32.299 V7.1.0) specification:
- * <pre> 
- *  7.2.37 IMS-Information AVP 
- *  The IMS-Information AVP (AVP code 876) is of type Grouped. 
- *  Its purpose is to allow the transmission of additional IMS service specific information elements. 
- *  
- *  It has the following ABNF grammar: 
- *    IMS-Information ::= AVP Header: 876 
- *      [ Event-Type ] 
- *      [ Role-Of-Node ] 
- *      { Node-Functionality } 
- *      [ User-Session-ID ] 
- *      [ Calling-Party-Address ] 
- *      [ Called-Party-Address ] 
- *      [ Time-Stamps ]
- *    * [ Application-Server-Information ]
- *    * [ Inter-Operator-Identifier ]
- *      [ IMS-Charging-Identifier ]
- *    * [ SDP-Session-Description ]
- *    * [ SDP-Media-Component ]
- *      [ Served-Party-IP-Address ]
- *      [ Server-Capabilities ]
- *      [ Trunk-Group-ID ]
- *      [ Bearer-Service ]
- *      [ Service-Id ]
- *      [ Service-Specific-Data ]
- *    * [ Message-Body ] 
- *      [ Cause-Code ]
+ * From the Diameter Ro Reference Point Protocol Details (3GPP TS 32.299 V8.25.0) specification:
+ * <pre>
+ *   7.2.58   IMS-Information AVP
+ *   The IMS-Information AVP (AVP code 876) is of type Grouped.
+ *   Its purpose is to allow the transmission of additional IMS service specific information elements. 
+ *   
+ *   It has the following ABNF grammar:
+ *      IMS-Information :: = < AVP Header: 876>
+ *         [ Event-Type ]
+ *         [ Role-Of-Node ]
+ *         { Node-Functionality }
+ *         [ User-Session-ID ]
+ *         [ Session-Priority ] -
+ *       * [ Calling-Party-Address ] (group not yet implemented)
+ *         [ Called-Party-Address ]
+ *       * [ Called-Asserted-Identity ] (not yet implemented)
+ *         [ Number-Portability-Routing-Information ] (not yet implemented)
+ *         [ Carrier-Select-Routing-Information ] (not yet implemented)
+ *         [ Alternate-Charged-Party-Address ]
+ *         [ Requested-Party-Address ] (not yet implemented)
+ *       * [ Associated-URI ] (not yet implemented)
+ *         [ Time-Stamps ]
+ *       * [ Application-Server-Information ]
+ *       * [ Inter-Operator-Identifier ]
+ *         [ IMS-Charging-Identifier ]
+ *       * [ SDP-Session-Description ]
+ *       * [ SDP-Media-Component ]   
+ *         [ Served-Party-IP-Address ]
+ *         [ Server-Capabilities ]
+ *         [ Trunk-Group-ID ]
+ *         [ Bearer-Service ]
+ *         [ Service-Id ]
+ *       * [ Service-Specific-Info ] (name changed not yet implemented)
+ *       * [ Message-Body ]
+ *         [ Cause-Code ] 
+ *         [ Access-Network-Information ] (not yet implemented)
+ *       * [ Early-Media-Description]  (not yet implemented)
+ *         [ IMS-Communication-Service-Identifier ] (not yet implemented)
  * </pre>
  * 
  * @author <a href="mailto:brainslog@gmail.com"> Alexandre Mendonca </a>
  * @author <a href="mailto:baranowb@gmail.com"> Bartosz Baranowski </a>
+ * @author <a href="mailto:jacek.stromecki@pro-ids.com"> Jacek Stromecki </a>
  */
 public interface ImsInformation extends GroupedAvp {
 
@@ -73,6 +84,11 @@ public interface ImsInformation extends GroupedAvp {
    */
   abstract byte[] getBearerService();
 
+  /**
+   * Returns the value of the Alternate-Charged-Party-Address AVP, of type UTF8String. A return value of null implies that the AVP has not been set.
+   */
+  abstract String getAlternateChargedPartyAddress();
+  
   /**
    * Returns the value of the Called-Party-Address AVP, of type UTF8String. A return value of null implies that the AVP has not been set.
    */
@@ -169,6 +185,11 @@ public interface ImsInformation extends GroupedAvp {
   abstract boolean hasBearerService();
 
   /**
+   * Returns true if the Alternate-Charged-Party-Address AVP is present in the message.
+   */
+  abstract boolean hasAlternateChargedPartyAddress();
+  
+  /**
    * Returns true if the Called-Party-Address AVP is present in the message.
    */
   abstract boolean hasCalledPartyAddress();
@@ -253,6 +274,11 @@ public interface ImsInformation extends GroupedAvp {
    */
   abstract void setBearerService(byte[] bearerService);
 
+  /**
+   * Sets the value of the Alternate-Charged-Party-Address AVP, of type UTF8String.
+   */
+  abstract void setAlternateChargedPartyAddress(String alternateChargedPartyAddress);
+  
   /**
    * Sets the value of the Called-Party-Address AVP, of type UTF8String.
    */

@@ -44,6 +44,7 @@ import org.mobicents.slee.resource.diameter.base.events.avp.GroupedAvpImpl;
  * <br>11:34:57 AM Apr 11, 2009 
  * <br>
  * @author <a href="mailto:brainslog@gmail.com"> Alexandre Mendonca </a>
+ * @author <a href="mailto:jacek.stromecki@pro-ids.com"> Jacek Stromecki </a>
  */ 
 public class ImsInformationImpl extends GroupedAvpImpl implements ImsInformation {
 
@@ -77,6 +78,13 @@ public class ImsInformationImpl extends GroupedAvpImpl implements ImsInformation
     return getAvpAsOctetString(DiameterRoAvpCodes.BEARER_SERVICE, DiameterRoAvpCodes.TGPP_VENDOR_ID);
   }
 
+  /* (non-Javadoc)
+   * @see net.java.slee.resource.diameter.ro.events.avp.ImsInformation#getAlternateChargedPartyAddress()
+   */
+  public String getAlternateChargedPartyAddress() {
+    return getAvpAsUTF8String(DiameterRoAvpCodes.ALTERNATE_CHARGED_PARTY_ADDRESS, DiameterRoAvpCodes.TGPP_VENDOR_ID);
+  }
+  
   /* (non-Javadoc)
    * @see net.java.slee.resource.diameter.ro.events.avp.ImsInformation#getCalledPartyAddress()
    */
@@ -211,6 +219,13 @@ public class ImsInformationImpl extends GroupedAvpImpl implements ImsInformation
   }
 
   /* (non-Javadoc)
+   * @see net.java.slee.resource.diameter.ro.events.avp.ImsInformation#hasAlternateChargedPartyAddress()
+   */
+  public boolean hasAlternateChargedPartyAddress() {
+    return hasAvp( DiameterRoAvpCodes.ALTERNATE_CHARGED_PARTY_ADDRESS, DiameterRoAvpCodes.TGPP_VENDOR_ID );
+  }
+  
+  /* (non-Javadoc)
    * @see net.java.slee.resource.diameter.ro.events.avp.ImsInformation#hasCalledPartyAddress()
    */
   public boolean hasCalledPartyAddress() {
@@ -329,6 +344,13 @@ public class ImsInformationImpl extends GroupedAvpImpl implements ImsInformation
    */
   public void setBearerService( byte[] bearerService ) {
     addAvp(DiameterRoAvpCodes.BEARER_SERVICE, DiameterRoAvpCodes.TGPP_VENDOR_ID, bearerService);
+  }
+  
+  /* (non-Javadoc)
+   * @see net.java.slee.resource.diameter.ro.events.avp.ImsInformation#setAlternateChargedPartyAddress(String)
+   */
+  public void setAlternateChargedPartyAddress( String alternateChargedPartyAddress ) {
+    addAvp(DiameterRoAvpCodes.ALTERNATE_CHARGED_PARTY_ADDRESS, DiameterRoAvpCodes.TGPP_VENDOR_ID, alternateChargedPartyAddress);
   }
 
   /* (non-Javadoc)

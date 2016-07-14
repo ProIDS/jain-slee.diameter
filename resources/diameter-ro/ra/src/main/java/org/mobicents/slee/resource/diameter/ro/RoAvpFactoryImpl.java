@@ -50,14 +50,15 @@ import net.java.slee.resource.diameter.ro.events.avp.PocInformation;
 import net.java.slee.resource.diameter.ro.events.avp.PsFurnishChargingInformation;
 import net.java.slee.resource.diameter.ro.events.avp.PsInformation;
 import net.java.slee.resource.diameter.ro.events.avp.RecipientAddress;
+import net.java.slee.resource.diameter.ro.events.avp.RecipientInfo;
 import net.java.slee.resource.diameter.ro.events.avp.SdpMediaComponent;
 import net.java.slee.resource.diameter.ro.events.avp.ServiceInformation;
+import net.java.slee.resource.diameter.ro.events.avp.SmsInformation;
 import net.java.slee.resource.diameter.ro.events.avp.TalkBurstExchange;
 import net.java.slee.resource.diameter.ro.events.avp.TimeStamps;
 import net.java.slee.resource.diameter.ro.events.avp.TrunkGroupId;
 import net.java.slee.resource.diameter.ro.events.avp.WlanInformation;
 import net.java.slee.resource.diameter.ro.events.avp.WlanRadioContainer;
-
 import org.mobicents.slee.resource.diameter.cca.CreditControlAVPFactoryImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.AdditionalContentInformationImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.AddressDomainImpl;
@@ -81,8 +82,10 @@ import org.mobicents.slee.resource.diameter.ro.events.avp.PocInformationImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.PsFurnishChargingInformationImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.PsInformationImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.RecipientAddressImpl;
+import org.mobicents.slee.resource.diameter.ro.events.avp.RecipientInfoImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.SdpMediaComponentImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.ServiceInformationImpl;
+import org.mobicents.slee.resource.diameter.ro.events.avp.SmsInformationImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.TalkBurstExchangeImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.TimeStampsImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.TrunkGroupIdImpl;
@@ -219,12 +222,20 @@ public class RoAvpFactoryImpl extends CreditControlAVPFactoryImpl implements RoA
     return (RecipientAddress) AvpUtilities.createAvp(DiameterRoAvpCodes.RECIPIENT_ADDRESS, DiameterRoAvpCodes.TGPP_VENDOR_ID, null, RecipientAddressImpl.class);
   }
 
-  public SdpMediaComponent createSdpMediaComponent() {
+    public RecipientInfo createRecipientInfo() {
+        return (RecipientInfo) AvpUtilities.createAvp(DiameterRoAvpCodes.RECIPIENT_INFO, DiameterRoAvpCodes.TGPP_VENDOR_ID, null, RecipientInfoImpl.class);
+    }
+
+    public SdpMediaComponent createSdpMediaComponent() {
     return (SdpMediaComponent) AvpUtilities.createAvp(DiameterRoAvpCodes.SDP_MEDIA_COMPONENT, DiameterRoAvpCodes.TGPP_VENDOR_ID, null, SdpMediaComponentImpl.class);
   }
 
   public ServiceInformation createServiceInformation() {
     return (ServiceInformation) AvpUtilities.createAvp(DiameterRoAvpCodes.SERVICE_INFORMATION, DiameterRoAvpCodes.TGPP_VENDOR_ID, null, ServiceInformationImpl.class);
+  }
+
+  public SmsInformation createSmsInformation() {
+    return (SmsInformation) AvpUtilities.createAvp(DiameterRoAvpCodes.SMS_INFORMATION, DiameterRoAvpCodes.TGPP_VENDOR_ID, null, SmsInformationImpl.class);
   }
 
   public TalkBurstExchange createTalkBurstExchange() {

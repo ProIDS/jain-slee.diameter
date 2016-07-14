@@ -66,6 +66,17 @@ public abstract class RoCreditControlMessageImpl extends DiameterMessageImpl imp
     addAvp(CreditControlAVPCodes.CC_Request_Number, ccRequestNumber);
   }
 
+    /**
+     * Sets the value of the CC-Request-Number AVP, of type Unsigned32.
+     * Alternative method for {@link #setCcRequestNumber(long ccRequestNumber) setCcRequestNumber(long ccRequestNumber)}
+     *
+     * @param ccRequestNumber
+     * @throws IllegalStateException
+     */
+    @Override
+    public void setCreditControlRequestNumber(long ccRequestNumber) throws IllegalStateException {
+        setCcRequestNumber(ccRequestNumber);
+    }
   /*
    * (non-Javadoc)
    * @see net.java.slee.resource.diameter.ro.events.RoCreditControlMessage#hasCcRequestNumber()
@@ -93,7 +104,19 @@ public abstract class RoCreditControlMessageImpl extends DiameterMessageImpl imp
     addAvp(CreditControlAVPCodes.CC_Request_Type, ccRequestType.getValue());
   }
 
-  /*
+    /**
+     * Sets the value of the CC-Request-Type AVP, of type Enumerated.
+     * Alternative method for {@link #setCcRequestType(CcRequestType ccRequestType) setCcRequestType}
+     *
+     * @param ccRequestType
+     * @throws IllegalStateException
+     */
+    public void setCreditControlRequestType(CcRequestType ccRequestType) throws IllegalStateException {
+        setCcRequestType(ccRequestType);
+    }
+
+
+    /*
    * (non-Javadoc)
    * @see net.java.slee.resource.diameter.ro.events.RoCreditControlMessage#hasCcRequestType()
    */

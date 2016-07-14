@@ -22,18 +22,18 @@
 
 package org.mobicents.slee.resource.diameter.ro.events;
 
-import org.jdiameter.api.Message;
-import org.mobicents.slee.resource.diameter.cca.events.avp.SubscriptionIdAvpImpl;
-import org.mobicents.slee.resource.diameter.cca.events.avp.UserEquipmentInfoAvpImpl;
-
 import net.java.slee.resource.diameter.base.events.avp.DiameterAvpCodes;
 import net.java.slee.resource.diameter.base.events.avp.TerminationCauseType;
+import net.java.slee.resource.diameter.cca.events.avp.CcRequestType;
 import net.java.slee.resource.diameter.cca.events.avp.CreditControlAVPCodes;
 import net.java.slee.resource.diameter.cca.events.avp.MultipleServicesIndicatorType;
 import net.java.slee.resource.diameter.cca.events.avp.RequestedActionType;
 import net.java.slee.resource.diameter.cca.events.avp.SubscriptionIdAvp;
 import net.java.slee.resource.diameter.cca.events.avp.UserEquipmentInfoAvp;
 import net.java.slee.resource.diameter.ro.events.RoCreditControlRequest;
+import org.jdiameter.api.Message;
+import org.mobicents.slee.resource.diameter.cca.events.avp.SubscriptionIdAvpImpl;
+import org.mobicents.slee.resource.diameter.cca.events.avp.UserEquipmentInfoAvpImpl;
 
 /**
  * 

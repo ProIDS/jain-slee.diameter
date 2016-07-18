@@ -52,6 +52,7 @@ import org.mobicents.slee.resource.diameter.base.events.avp.GroupedAvpImpl;
  * 
  * @author <a href="mailto:baranowb@gmail.com"> Bartosz Baranowski </a>
  * @author <a href="mailto:brainslog@gmail.com"> Alexandre Mendonca </a>
+ * @author <a href="mailto:grzegorz.figiel@pro-ids.com"> Grzegorz Figiel [ProIDS] </a>
  */
 public class AvpUtilities {
 
@@ -477,11 +478,12 @@ public class AvpUtilities {
     switch(avpCode) {
       case Avp.SESSION_ID:
         //(...) All messages pertaining to a specific session MUST include only one Session-Id AVP (...)
-        if(set.getAvp(avpCode) != null) {
-            set.removeAvp(avpCode);
+        if(set.getAvp(avpCode) == null) {
+            // (...) the Session-Id SHOULD appear immediately following the Diameter Header
+            set.insertAvp(0, avpCode, value, vendorId, isMandatory, isProtected, false);
+            //TODO: according to interface Javadoc exception should be throws hoever living another apporoach
+//            throw new IllegalStateException("Session-ID has been already set for this Diameter Message");
         }
-        // (...) the Session-Id SHOULD appear immediately following the Diameter Header
-        set.insertAvp(0, avpCode, value, vendorId, isMandatory, isProtected, false);
         break;
       case Avp.ORIGIN_HOST:
       case Avp.ORIGIN_REALM:

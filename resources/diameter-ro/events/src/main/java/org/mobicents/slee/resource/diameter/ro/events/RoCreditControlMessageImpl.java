@@ -24,14 +24,13 @@ package org.mobicents.slee.resource.diameter.ro.events;
 
 import net.java.slee.resource.diameter.cca.events.avp.CcRequestType;
 import net.java.slee.resource.diameter.cca.events.avp.CreditControlAVPCodes;
-import net.java.slee.resource.diameter.cca.events.avp.MultipleServicesCreditControlAvp;
 import net.java.slee.resource.diameter.ro.events.RoCreditControlMessage;
+import net.java.slee.resource.diameter.ro.events.avp.MultipleServicesCreditControl;
 import net.java.slee.resource.diameter.ro.events.avp.ServiceInformation;
-
 import org.jdiameter.api.Message;
 import org.mobicents.slee.resource.diameter.base.events.DiameterMessageImpl;
-import org.mobicents.slee.resource.diameter.cca.events.avp.MultipleServicesCreditControlAvpImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.DiameterRoAvpCodes;
+import org.mobicents.slee.resource.diameter.ro.events.avp.MultipleServicesCreditControlImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.ServiceInformationImpl;
 
 /**
@@ -139,7 +138,7 @@ public abstract class RoCreditControlMessageImpl extends DiameterMessageImpl imp
    * @see net.java.slee.resource.diameter.ro.events.RoCreditControlMessage#setMultipleServicesCreditControl(net.java.slee.resource.diameter.cca.events.avp.MultipleServicesCreditControlAvp)
    */
   @Override
-  public void setMultipleServicesCreditControl(MultipleServicesCreditControlAvp multipleServicesCreditControl) throws IllegalStateException {
+  public void setMultipleServicesCreditControl(MultipleServicesCreditControl multipleServicesCreditControl) throws IllegalStateException {
     addAvp(CreditControlAVPCodes.Multiple_Services_Credit_Control, multipleServicesCreditControl.byteArrayValue());
   }
 
@@ -148,8 +147,8 @@ public abstract class RoCreditControlMessageImpl extends DiameterMessageImpl imp
    * @see net.java.slee.resource.diameter.ro.events.RoCreditControlMessage#setMultipleServicesCreditControls(net.java.slee.resource.diameter.cca.events.avp.MultipleServicesCreditControlAvp[])
    */
   @Override
-  public void setMultipleServicesCreditControls(MultipleServicesCreditControlAvp[] multipleServicesCreditControls) throws IllegalStateException {
-    for (MultipleServicesCreditControlAvp multipleServicesCreditControl : multipleServicesCreditControls) {
+  public void setMultipleServicesCreditControls(MultipleServicesCreditControl[] multipleServicesCreditControls) throws IllegalStateException {
+    for (MultipleServicesCreditControl multipleServicesCreditControl : multipleServicesCreditControls) {
       setMultipleServicesCreditControl(multipleServicesCreditControl);
     }
   }
@@ -159,8 +158,8 @@ public abstract class RoCreditControlMessageImpl extends DiameterMessageImpl imp
    * @see net.java.slee.resource.diameter.ro.events.RoCreditControlMessage#getMultipleServicesCreditControls()
    */
   @Override
-  public MultipleServicesCreditControlAvp[] getMultipleServicesCreditControls() {
-    return (MultipleServicesCreditControlAvp[]) getAvpsAsCustom(CreditControlAVPCodes.Multiple_Services_Credit_Control, MultipleServicesCreditControlAvpImpl.class);
+  public MultipleServicesCreditControl[] getMultipleServicesCreditControls() {
+    return (MultipleServicesCreditControl[]) getAvpsAsCustom(CreditControlAVPCodes.Multiple_Services_Credit_Control, MultipleServicesCreditControlImpl.class);
   }
 
   /*

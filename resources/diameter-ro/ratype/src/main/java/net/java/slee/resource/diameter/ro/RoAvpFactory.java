@@ -41,6 +41,7 @@ import net.java.slee.resource.diameter.ro.events.avp.MessageBody;
 import net.java.slee.resource.diameter.ro.events.avp.MessageClass;
 import net.java.slee.resource.diameter.ro.events.avp.MmContentType;
 import net.java.slee.resource.diameter.ro.events.avp.MmsInformation;
+import net.java.slee.resource.diameter.ro.events.avp.MultipleServicesCreditControl;
 import net.java.slee.resource.diameter.ro.events.avp.NodeFunctionality;
 import net.java.slee.resource.diameter.ro.events.avp.OriginatorAddress;
 import net.java.slee.resource.diameter.ro.events.avp.PocInformation;
@@ -197,6 +198,13 @@ public interface RoAvpFactory extends CreditControlAVPFactory {
    * @return
    */
   public MmsInformation createMmsInformation();
+
+  /**
+   * Create an empty MultipleServicesCreditControl (Grouped AVP) Ro interface instance.
+   *
+   * @return
+   */
+  public MultipleServicesCreditControl createMultipleServicesCreditControl();
 
   /**
    * Create an empty OriginatorAddress (Grouped AVP) instance.

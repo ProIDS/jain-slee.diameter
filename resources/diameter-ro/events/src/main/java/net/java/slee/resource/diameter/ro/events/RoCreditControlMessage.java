@@ -26,7 +26,7 @@ import net.java.slee.resource.diameter.base.events.DiameterMessage;
 import net.java.slee.resource.diameter.base.events.avp.DiameterIdentity;
 import net.java.slee.resource.diameter.base.events.avp.ProxyInfoAvp;
 import net.java.slee.resource.diameter.cca.events.avp.CcRequestType;
-import net.java.slee.resource.diameter.cca.events.avp.MultipleServicesCreditControlAvp;
+import net.java.slee.resource.diameter.ro.events.avp.MultipleServicesCreditControl;
 import net.java.slee.resource.diameter.ro.events.avp.ServiceInformation;
 
 /**
@@ -132,7 +132,7 @@ public interface RoCreditControlMessage extends DiameterMessage {
    * 
    * @return
    */
-  MultipleServicesCreditControlAvp[] getMultipleServicesCreditControls();
+  MultipleServicesCreditControl[] getMultipleServicesCreditControls();
 
   /**
    * Sets a single Multiple-Services-Credit-Control AVP in the message, of
@@ -141,7 +141,7 @@ public interface RoCreditControlMessage extends DiameterMessage {
    * @param multipleServicesCreditControl
    * @throws IllegalStateException
    */
-  void setMultipleServicesCreditControl(MultipleServicesCreditControlAvp multipleServicesCreditControl) throws IllegalStateException;
+  void setMultipleServicesCreditControl(MultipleServicesCreditControl multipleServicesCreditControl) throws IllegalStateException;
 
   /**
    * Sets the set of Multiple-Services-Credit-Control AVPs, with all the
@@ -150,7 +150,7 @@ public interface RoCreditControlMessage extends DiameterMessage {
    * @param multipleServicesCreditControls
    * @throws IllegalStateException
    */
-  void setMultipleServicesCreditControls(MultipleServicesCreditControlAvp[] multipleServicesCreditControls) throws IllegalStateException;
+  void setMultipleServicesCreditControls(MultipleServicesCreditControl[] multipleServicesCreditControls) throws IllegalStateException;
 
   /**
    * Returns the set of Proxy-Info AVPs.

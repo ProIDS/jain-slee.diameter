@@ -25,6 +25,7 @@ package org.mobicents.slee.resource.diameter.ro;
 import net.java.slee.resource.diameter.base.DiameterAvpFactory;
 import net.java.slee.resource.diameter.base.events.avp.AvpUtilities;
 import net.java.slee.resource.diameter.cca.CreditControlAVPFactory;
+import net.java.slee.resource.diameter.cca.events.avp.CreditControlAVPCodes;
 import net.java.slee.resource.diameter.ro.RoAvpFactory;
 import net.java.slee.resource.diameter.ro.events.avp.AdditionalContentInformation;
 import net.java.slee.resource.diameter.ro.events.avp.AddressDomain;
@@ -44,6 +45,7 @@ import net.java.slee.resource.diameter.ro.events.avp.MessageBody;
 import net.java.slee.resource.diameter.ro.events.avp.MessageClass;
 import net.java.slee.resource.diameter.ro.events.avp.MmContentType;
 import net.java.slee.resource.diameter.ro.events.avp.MmsInformation;
+import net.java.slee.resource.diameter.ro.events.avp.MultipleServicesCreditControl;
 import net.java.slee.resource.diameter.ro.events.avp.NodeFunctionality;
 import net.java.slee.resource.diameter.ro.events.avp.OriginatorAddress;
 import net.java.slee.resource.diameter.ro.events.avp.PocInformation;
@@ -77,6 +79,7 @@ import org.mobicents.slee.resource.diameter.ro.events.avp.MessageBodyImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.MessageClassImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.MmContentTypeImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.MmsInformationImpl;
+import org.mobicents.slee.resource.diameter.ro.events.avp.MultipleServicesCreditControlImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.OriginatorAddressImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.PocInformationImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.PsFurnishChargingInformationImpl;
@@ -105,7 +108,8 @@ public class RoAvpFactoryImpl extends CreditControlAVPFactoryImpl implements RoA
     this.baseAvpFactory = baseAvpFactory;
   }
 
-  public AdditionalContentInformation createAdditionalContentInformation() {
+
+    public AdditionalContentInformation createAdditionalContentInformation() {
     return (AdditionalContentInformation) AvpUtilities.createAvp(DiameterRoAvpCodes.ADDITIONAL_CONTENT_INFORMATION, DiameterRoAvpCodes.TGPP_VENDOR_ID, null, AdditionalContentInformationImpl.class);
   }
 
@@ -190,6 +194,10 @@ public class RoAvpFactoryImpl extends CreditControlAVPFactoryImpl implements RoA
   public MmsInformation createMmsInformation() {
     return (MmsInformation) AvpUtilities.createAvp(DiameterRoAvpCodes.MMS_INFORMATION, DiameterRoAvpCodes.TGPP_VENDOR_ID, null, MmsInformationImpl.class);
   }
+
+    public MultipleServicesCreditControl createMultipleServicesCreditControl() {
+        return (MultipleServicesCreditControl) AvpUtilities.createAvp( CreditControlAVPCodes.Multiple_Services_Credit_Control, null, MultipleServicesCreditControlImpl.class );
+    }
 
   public OriginatorAddress createOriginatorAddress() {
     return (OriginatorAddress) AvpUtilities.createAvp(DiameterRoAvpCodes.ORIGINATOR_ADDRESS, DiameterRoAvpCodes.TGPP_VENDOR_ID, null, OriginatorAddressImpl.class);

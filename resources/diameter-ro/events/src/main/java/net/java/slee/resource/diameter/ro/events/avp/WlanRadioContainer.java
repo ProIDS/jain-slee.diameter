@@ -37,7 +37,7 @@ import net.java.slee.resource.diameter.base.events.avp.GroupedAvp;
  *  WLAN-Radio-Container ::= AVP Header: 892 
  *      [ Operator-Name ] #exclude 
  *      [ Location-Type ] 
- *      [ Location-Information ] #exclude 
+ *      [ Location-Information ] #exclude
  *      [ WLAN-Technology ]
  * </pre>
  * 

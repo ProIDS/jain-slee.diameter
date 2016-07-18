@@ -52,6 +52,7 @@ import org.mobicents.slee.resource.diameter.base.events.avp.GroupedAvpImpl;
  * 
  * @author <a href="mailto:baranowb@gmail.com"> Bartosz Baranowski </a>
  * @author <a href="mailto:brainslog@gmail.com"> Alexandre Mendonca </a>
+ * @author <a href="mailto:grzegorz.figiel@pro-ids.com"> Grzegorz Figiel [ProIDS] </a>
  */
 public class AvpUtilities {
 
@@ -223,10 +224,17 @@ public class AvpUtilities {
     performPreAddOperations(parent, avpCode, vendorId, set);
 
     switch(avpCode) {
-      case Avp.SESSION_ID:
-        // (...) the Session-Id SHOULD appear immediately following the Diameter Header
-        set.insertAvp(0, avpCode, value, vendorId, isMandatory, isProtected, isOctetString);
-        break;
+        case Avp.SESSION_ID:
+            //(...) All messages pertaining to a specific session MUST include only one Session-Id AVP (...)
+            if(set.getAvp(avpCode) == null) {
+                // (...) the Session-Id SHOULD appear immediately following the Diameter Header
+                set.insertAvp(0, avpCode, value, vendorId, isMandatory, isProtected, isOctetString);
+                //TODO: according to interface Javadoc exception should be throws hoever living another apporoach
+//            throw new IllegalStateException("Session-ID has been already set for this Diameter Message");
+            } else {
+                logger.warn("Trying to add another Session-ID AVP with value " + value + ". Current value will not be changed.");
+            }
+            break;
       case Avp.ORIGIN_HOST:
       case Avp.ORIGIN_REALM:
       case Avp.DESTINATION_HOST:
@@ -477,11 +485,14 @@ public class AvpUtilities {
     switch(avpCode) {
       case Avp.SESSION_ID:
         //(...) All messages pertaining to a specific session MUST include only one Session-Id AVP (...)
-        if(set.getAvp(avpCode) != null) {
-            set.removeAvp(avpCode);
+        if(set.getAvp(avpCode) == null) {
+            // (...) the Session-Id SHOULD appear immediately following the Diameter Header
+            set.insertAvp(0, avpCode, value, vendorId, isMandatory, isProtected, false);
+            //TODO: according to interface Javadoc exception should be throws hoever living another apporoach
+//            throw new IllegalStateException("Session-ID has been already set for this Diameter Message");
+        } else {
+            logger.warn("Trying to add another Session-ID AVP with value " + value + ". Current value will not be changed.");
         }
-        // (...) the Session-Id SHOULD appear immediately following the Diameter Header
-        set.insertAvp(0, avpCode, value, vendorId, isMandatory, isProtected, false);
         break;
       case Avp.ORIGIN_HOST:
       case Avp.ORIGIN_REALM:
@@ -1604,10 +1615,17 @@ public class AvpUtilities {
     performPreAddOperations(parent, avpCode, vendorId, set);
 
     switch(avpCode) {
-      case Avp.SESSION_ID:
-        // (...) the Session-Id SHOULD appear immediately following the Diameter Header
-        set.insertAvp(0, avpCode, value, vendorId, isMandatory, isProtected);
-        break;
+        case Avp.SESSION_ID:
+            //(...) All messages pertaining to a specific session MUST include only one Session-Id AVP (...)
+            if(set.getAvp(avpCode) == null) {
+                // (...) the Session-Id SHOULD appear immediately following the Diameter Header
+                set.insertAvp(0, avpCode, value, vendorId, isMandatory, isProtected);
+                //TODO: according to interface Javadoc exception should be throws hoever living another apporoach
+//            throw new IllegalStateException("Session-ID has been already set for this Diameter Message");
+            } else {
+                logger.warn("Trying to add another Session-ID AVP with value " + value + ". Current value will not be changed.");
+            }
+            break;
       case Avp.ORIGIN_HOST:
       case Avp.ORIGIN_REALM:
       case Avp.DESTINATION_HOST:
@@ -2220,11 +2238,18 @@ public class AvpUtilities {
     }
     else {
       switch (avpCode) {
-        case Avp.SESSION_ID:          
-          // (...) the Session-Id SHOULD appear immediately following the Diameter Header
-          set.insertAvp(0, avpCode, avp.byteArrayValue(), avp.getVendorId(), avp.getMandatoryRule() != DiameterAvp.FLAG_RULE_MUSTNOT, avp.getProtectedRule() == DiameterAvp.FLAG_RULE_MUST);
-          break;
-        case Avp.ORIGIN_HOST: 
+          case Avp.SESSION_ID:
+              //(...) All messages pertaining to a specific session MUST include only one Session-Id AVP (...)
+              if(set.getAvp(avpCode) == null) {
+                  // (...) the Session-Id SHOULD appear immediately following the Diameter Header
+                  set.insertAvp(0, avpCode, avp.byteArrayValue(), avp.getVendorId(), avp.getMandatoryRule() != DiameterAvp.FLAG_RULE_MUSTNOT, avp.getProtectedRule() == DiameterAvp.FLAG_RULE_MUST);
+                  //TODO: according to interface Javadoc exception should be throws hoever living another apporoach
+//            throw new IllegalStateException("Session-ID has been already set for this Diameter Message");
+              } else {
+                  logger.warn("Trying to add another Session-ID AVP with value " + avp.byteArrayValue() + ". Current value will not be changed.");
+              }
+              break;
+        case Avp.ORIGIN_HOST:
         case Avp.ORIGIN_REALM: 
         case Avp.DESTINATION_HOST: 
         case Avp.DESTINATION_REALM: 

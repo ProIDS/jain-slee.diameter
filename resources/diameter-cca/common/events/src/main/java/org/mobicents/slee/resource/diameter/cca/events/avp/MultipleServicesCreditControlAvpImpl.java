@@ -141,15 +141,6 @@ public class MultipleServicesCreditControlAvpImpl extends GroupedAvpImpl impleme
   public long getValidityTime() {
     return getAvpAsUnsigned32(CreditControlAVPCodes.Validity_Time);
   }
-  
-  /*
-   * (non-Javadoc)
-   * 
-   * @see net.java.slee.resource.diameter.cca.events.avp.MultipleServicesCreditControlAvp#getUnitQuotaThreshold()
-   */
-  public long getUnitQuotaThreshold() {
-    return getAvpAsUnsigned32(CreditControlAVPCodes.UNIT_QUOTA_THRESHOLD);
-  }
 
   /*
    * (non-Javadoc)
@@ -212,15 +203,6 @@ public class MultipleServicesCreditControlAvpImpl extends GroupedAvpImpl impleme
    */
   public boolean hasValidityTime() {
     return hasAvp(CreditControlAVPCodes.Validity_Time);
-  }
-  
-  /*
-   * (non-Javadoc)
-   * 
-   * @see net.java.slee.resource.diameter.cca.events.avp.MultipleServicesCreditControlAvp#hasUnitQuotaThreshold()
-   */
-  public boolean hasUnitQuotaThreshold() {
-    return hasAvp(CreditControlAVPCodes.UNIT_QUOTA_THRESHOLD);
   }
 
   /*
@@ -344,15 +326,6 @@ public class MultipleServicesCreditControlAvpImpl extends GroupedAvpImpl impleme
    */
   public void setValidityTime(long validityTime) {
     addAvp(CreditControlAVPCodes.Validity_Time, validityTime);
-  }
-  
-  /*
-   * (non-Javadoc)
-   * 
-   * @see net.java.slee.resource.diameter.cca.events.avp.MultipleServicesCreditControlAvp#setValidityTime(long)
-   */
-  public void setUnitQuotaThreshold(long validityTime) {
-    addAvp(CreditControlAVPCodes.UNIT_QUOTA_THRESHOLD, validityTime);
   }
 
 }

@@ -17,7 +17,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  *
  */
-
 package org.mobicents.slee.resource.diameter.ro.events.avp;
 
 import net.java.slee.resource.diameter.ro.events.avp.MultipleServicesCreditControl;
@@ -27,23 +26,56 @@ import org.mobicents.slee.resource.diameter.cca.events.avp.MultipleServicesCredi
  * Implementation of the Recipient-Info grouped AVP type.<br>
  * <br>
  *
- * @author <a href="mailto:grzegorz.figiel@pro-ids.com"> Grzegorz Figiel [ProIDS] </a>
+ * @author <a href="mailto:grzegorz.figiel@pro-ids.com"> Grzegorz Figiel
+ * [ProIDS] </a>
+ * @author <a href="mailto:jacek.stromecki@pro-ids.com"> Jacek Stromecki
+ * [ProIDS] </a>
  */
 public class MultipleServicesCreditControlImpl extends MultipleServicesCreditControlAvpImpl implements MultipleServicesCreditControl {
 
-  public MultipleServicesCreditControlImpl() {
-    super();
-  }
+	public MultipleServicesCreditControlImpl() {
+		super();
+	}
 
-  /**
-   * @param code
-   * @param vendorId
-   * @param mnd
-   * @param prt
-   * @param value
-   */
-  public MultipleServicesCreditControlImpl(int code, long vendorId, int mnd, int prt, byte[] value ) {
-    super( code, vendorId, mnd, prt, value );
-  }
+	/**
+	 * @param code
+	 * @param vendorId
+	 * @param mnd
+	 * @param prt
+	 * @param value
+	 */
+	public MultipleServicesCreditControlImpl(int code, long vendorId, int mnd, int prt, byte[] value) {
+		super(code, vendorId, mnd, prt, value);
+	}
+
+	/**
+	 * (non-Javadoc)
+	 *
+	 * @see
+	 * net.java.slee.resource.diameter.ro.events.avp.MultipleServicesCreditControl#getUnitQuotaThreshold()
+	 */
+	public long getUnitQuotaThreshold() {
+		return getAvpAsUnsigned32(DiameterRoAvpCodes.UNIT_QUOTA_THRESHOLD);
+	}
+
+	/**
+	 * (non-Javadoc)
+	 *
+	 * @see
+	 * net.java.slee.resource.diameter.ro.events.avp.MultipleServicesCreditControl#hasUnitQuotaThreshold()
+	 */
+	public boolean hasUnitQuotaThreshold() {
+		return hasAvp(DiameterRoAvpCodes.UNIT_QUOTA_THRESHOLD);
+	}
+
+	/**
+	 * (non-Javadoc)
+	 *
+	 * @see
+	 * net.java.slee.resource.diameter.ro.events.avp.MultipleServicesCreditControl#setValidityTime(long)
+	 */
+	public void setUnitQuotaThreshold(long validityTime) {
+		addAvp(DiameterRoAvpCodes.UNIT_QUOTA_THRESHOLD, validityTime);
+	}
 
 }

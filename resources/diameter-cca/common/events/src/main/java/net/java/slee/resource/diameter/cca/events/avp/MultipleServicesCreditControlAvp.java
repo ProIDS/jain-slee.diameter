@@ -95,10 +95,12 @@ import net.java.slee.resource.diameter.base.events.avp.GroupedAvp;
  *                                             [ Result-Code ]
  *                                             [ Final-Unit-Indication ]
  * 										      *[ AVP ]
+ *											   [ Unit-Quota-Threshold ]
  * </pre>
  *      
  * @author <a href="mailto:baranowb@gmail.com"> Bartosz Baranowski </a>
  * @author <a href="mailto:brainslog@gmail.com"> Alexandre Mendonca </a>
+ * @author <a href="mailto:jacek.stromecki@proi-ids.com"> Jacek Stromecki </a>
  */
 public interface MultipleServicesCreditControlAvp extends GroupedAvp {
 
@@ -190,6 +192,13 @@ public interface MultipleServicesCreditControlAvp extends GroupedAvp {
   long getValidityTime();
 
   /**
+   * Returns the value of the Unit-Quota-Threshold AVP, of type Unsigned32.
+   * 
+   * @return
+   */
+  long getUnitQuotaThreshold();
+  
+  /**
    * Returns the value of the Validity-Time AVP, of type Unsigned32.
    * 
    * @return
@@ -233,6 +242,12 @@ public interface MultipleServicesCreditControlAvp extends GroupedAvp {
    */
   boolean hasValidityTime();
 
+  /**
+   * Returns true if the Unit-Quota-Threshold AVP is present in the message.
+   * 
+   * @return
+   */
+  boolean hasUnitQuotaThreshold();
 
   /**
    * Sets the value of the Final-Unit-Indication AVP, of type Grouped. <br>
@@ -332,5 +347,12 @@ public interface MultipleServicesCreditControlAvp extends GroupedAvp {
    * @param validityTime
    */
   void setValidityTime(long validityTime);
+  
+  /**
+   * Sets the value of the Unit-Quota-Threshold AVP, of type Unsigned32.
+   * 
+   * @param unitQuotaThreshold
+   */
+  void setUnitQuotaThreshold(long unitQuotaThreshold);
 
 }

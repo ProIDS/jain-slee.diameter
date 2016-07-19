@@ -29,6 +29,7 @@ package net.java.slee.resource.diameter.cca.events.avp;
  * 
  * @author <a href="mailto:baranowb@gmail.com"> Bartosz Baranowski </a>
  * @author <a href="mailto:brainslog@gmail.com"> Alexandre Mendonca </a>
+ * @author <a href="mailto:jacek.stromecki@pro-ids.com"> Jacek Stromecki </a>
  */
 public final class CreditControlAVPCodes {
 
@@ -560,6 +561,17 @@ public final class CreditControlAVPCodes {
    *  AVP ]
    * </pre>
    */
+  
+  /**
+   *	The Unit-Quota-Threshold AVP (AVP code 1226) is of type Unsigned32 and
+   *	contains a threshold value in service specific units. This AVP may be 
+   *	included within the Multiple-Services-Credit-Control AVP when this AVP
+   *	also contains a Granted-Service-Units AVP containing
+   *	CC-Service-Specific-Units AVP (i.e. when the granted quota is service
+   *	specific) or within Rate-Element AVP.
+   */
+  public static final int UNIT_QUOTA_THRESHOLD = 1226;
+  
   public static final int Used_Service_Unit = 446;
   /**
    * <pre>

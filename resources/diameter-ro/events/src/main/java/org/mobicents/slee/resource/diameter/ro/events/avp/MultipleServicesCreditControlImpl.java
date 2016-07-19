@@ -23,13 +23,11 @@ import net.java.slee.resource.diameter.ro.events.avp.MultipleServicesCreditContr
 import org.mobicents.slee.resource.diameter.cca.events.avp.MultipleServicesCreditControlAvpImpl;
 
 /**
- * Implementation of the Recipient-Info grouped AVP type.<br>
+ * Implementation of the Multiple-Services-Credit-Control grouped AVP type.<br>
  * <br>
  *
- * @author <a href="mailto:grzegorz.figiel@pro-ids.com"> Grzegorz Figiel
- * [ProIDS] </a>
- * @author <a href="mailto:jacek.stromecki@pro-ids.com"> Jacek Stromecki
- * [ProIDS] </a>
+ * @author <a href="mailto:grzegorz.figiel@pro-ids.com"> Grzegorz Figiel [ProIDS] </a>
+ * @author <a href="mailto:jacek.stromecki@pro-ids.com"> Jacek Stromecki [ProIDS] </a>
  */
 public class MultipleServicesCreditControlImpl extends MultipleServicesCreditControlAvpImpl implements MultipleServicesCreditControl {
 

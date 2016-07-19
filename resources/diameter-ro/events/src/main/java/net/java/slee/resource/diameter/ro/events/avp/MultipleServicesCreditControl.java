@@ -22,12 +22,41 @@ package net.java.slee.resource.diameter.ro.events.avp;
 import net.java.slee.resource.diameter.cca.events.avp.MultipleServicesCreditControlAvp;
 
 /**
- * Defines an interface representing the Ro interface
- * Multiple-Services-Credit-Control grouped AVP type.<br>
+ * Defines an interface representing the Multiple-Services-Credit-Control grouped AVP type.<br>
  * <br>
+ * From the Diameter Ro Reference Point Protocol Details (3GPP TS 32.299 V8.25.0) specification:
+ * <pre>
+ * 7.1.4	Multiple-Services-Credit-Control
+ * The Multiple-Services-Credit-Control AVP (AVP code 456) is of type grouped as specified in IETF RFC 4006 [402]. It contains additional 3GPP specific charging parameters.
  *
- * <Multiple-Services-Credit-Control> ::= < AVP Header: 456 >
- *											[ Unit-Quota-Threshold ]
+ *     It has the following ABNF grammar:
+ *     <Multiple-Services-Credit-Control> ::=	   < AVP Header: 456 >
+ *     			[ Granted-Service-Unit ]
+ *     			[ Requested-Service-Unit ]
+ *     			* [ Used-Service-Unit ]
+ *     			* [ Service-Identifier ]	NOT IMPLEMENTED
+ *     			[ Rating-Group ]
+ *     			* [ G-S-U-Pool-Reference ]
+ *     			[ Validity-Time ]
+ *     			[ Result-Code ]
+ *     			[ Final-Unit-Indication ]
+ *     			[ Time-Quota-Threshold ]	NOT IMPLEMENTED
+ *     			[ Volume-Quota-Threshold ]	NOT IMPLEMENTED
+ *     			[ Unit-Quota-Threshold ]	NOT IMPLEMENTED
+ *     			[ Quota-Holding-Time ]		NOT IMPLEMENTED
+ *     			[ Quota-Consumption-Time ]	NOT IMPLEMENTED
+ *     			* [ Reporting-Reason ]		NOT IMPLEMENTED
+ *     			[ Trigger ]					NOT IMPLEMENTED
+ *     			[ PS-Furnish-Charging-Information ]	NOT IMPLEMENTED
+ *     			[ Refund-Information ]		NOT IMPLEMENTED
+ *     			* [ AF-Correlation-Information]	NOT IMPLEMENTED
+ *     			* [ Envelope ]				NOT IMPLEMENTED
+ *     			[ Envelope-Reporting ]		NOT IMPLEMENTED
+ *     			[ Time-Quota-Mechanism ]	NOT IMPLEMENTED
+ *     			* [ Service-Specific-Info ]	NOT IMPLEMENTED
+ *     			[ QoS-Information ]			NOT IMPLEMENTED
+ *
+ * </pre>
  *
  * @author <a href="mailto:grzegorz.figiel@pro-ids.com"> Grzegorz Figiel [ProIDS] </a>
  * @author <a href="mailto:jacek.stromecki@pro-ids.com"> Jacek Stromecki [ProIDS] </a>

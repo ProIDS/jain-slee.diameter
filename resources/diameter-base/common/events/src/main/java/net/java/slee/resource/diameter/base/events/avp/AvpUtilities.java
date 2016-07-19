@@ -476,6 +476,10 @@ public class AvpUtilities {
 
     switch(avpCode) {
       case Avp.SESSION_ID:
+        //(...) All messages pertaining to a specific session MUST include only one Session-Id AVP (...)
+        if(set.getAvp(avpCode) != null) {
+            set.removeAvp(avpCode);
+        }
         // (...) the Session-Id SHOULD appear immediately following the Diameter Header
         set.insertAvp(0, avpCode, value, vendorId, isMandatory, isProtected, false);
         break;

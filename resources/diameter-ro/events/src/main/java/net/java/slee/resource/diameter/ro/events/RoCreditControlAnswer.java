@@ -28,35 +28,54 @@ import net.java.slee.resource.diameter.base.events.avp.RedirectHostUsageType;
 import net.java.slee.resource.diameter.cca.events.avp.CcSessionFailoverType;
 import net.java.slee.resource.diameter.cca.events.avp.CostInformationAvp;
 import net.java.slee.resource.diameter.cca.events.avp.CreditControlFailureHandlingType;
+import net.java.slee.resource.diameter.ro.events.avp.RemainingBalance;
 
 /**
- * Interface defining RoCreditControlAnswer message. It has following structure:
- * 
+ * Interface defining RoCreditControlAnswer message. Not all Rel. 8 AVPs are implemented - see indications below.
+ * <br>
+ * From the Diameter Ro Reference Point Protocol Details (3GPP TS 32.299 V8.25.0) specification:
+ *
  * <pre>
- *        <CCA> ::= < Diameter Header: 272, PXY >
- *                  < Session-Id > 
- *                  { Result-Code } 
- *                  { Origin-Host } 
- *                  { Origin-Realm } 
- *                  { Auth-Application-Id } 
- *                  { CC-Request-Type } 
- *                  { CC-Request-Number } 
- *                  [ CC-Session-Failover ]  
- *            *[ Multiple-Services-Credit-Control ]  
- *                  [ Cost-Information]  
- *                  [ Credit-Control-Failure-Handling ]  
- *                 *[ Redirect-Host] 
- *                  [ Redirect-Host-Usage ] 
- *                  [ Redirect-Max-Cache-Time ] 
- *                 *[ Proxy-Info ] 
- *                 *[ Route-Record ] 
- *                 *[ Failed-AVP ]
- *                  [ Service-Information ]
- *                 *[ AVP ]
+ *  The Credit-Control-Answer (CCA) messages, indicated by the Command-Code field set to 272 is sent by the OCF to the CTF in order to reply to the CCR.
+ *  The CCA message format is defined according to IETF RFC 4006 [402] as follows:
+ *  <CCA> ::=  < Diameter Header: 272, PXY >
+ *
+ *        < Session-Id >
+ *        { Result-Code }
+ *        { Origin-Host }
+ *        { Origin-Realm }
+ *        { Auth-Application-Id }
+ *        { CC-Request-Type }
+ *        { CC-Request-Number }
+ *        [ User-Name ]  NOT IMPLEMENTED YET
+ *        [ CC-Session-Failover ]
+ *        [ CC-Sub-Session-Id ]  NOT IMPLEMENTED YET
+ *        [ Acct-Multi-Session-Id ]  NOT IMPLEMENTED YET
+ *        [ Origin-State-Id ]  NOT IMPLEMENTED YET
+ *        [ Event-Timestamp ]  NOT IMPLEMENTED YET
+ *        [ Granted-Service-Unit ]  NOT IMPLEMENTED YET
+ *        *[ Multiple-Services-Credit-Control ]
+ *        [ Cost-Information]
+ *        [ Low-Balance-Indication ]  NOT IMPLEMENTED YET
+ *        [ Remaining-Balance ]
+ *        [ Final-Unit-Indication ]  NOT IMPLEMENTED YET
+ *        [ Check-Balance-Result ]  NOT IMPLEMENTED YET
+ *        [ Credit-Control-Failure-Handling ]
+ *        [ Direct-Debiting-Failure-Handling ]  NOT IMPLEMENTED YET
+ *        [ Validity-Time]  NOT IMPLEMENTED YET
+ *        *[ Redirect-Host]
+ *        [ Redirect-Host-Usage ]
+ *        [ Redirect-Max-Cache-Time ]
+ *        *[ Proxy-Info ]
+ *        *[ Route-Record ]
+ *        *[ Failed-AVP ]
+ *        [ Service-Information ]
+ *        *[ AVP ]
  * </pre>
  * 
  * @author <a href="mailto:baranowb@gmail.com"> Bartosz Baranowski </a>
  * @author <a href="mailto:brainslog@gmail.com"> Alexandre Mendonca </a>
+ * @author <a href="mailto:grzegorz.figiel@pro-ids.com"> Grzegorz Figiel [ProIDS] </a>
  */
 public interface RoCreditControlAnswer extends RoCreditControlMessage {
 
@@ -105,29 +124,51 @@ public interface RoCreditControlAnswer extends RoCreditControlMessage {
    */
   boolean hasCcSessionFailover();
 
-  /**
-   * Returns the value of the Cost-Information AVP, of type Grouped.
-   * 
-   * @return
-   */
-  CostInformationAvp getCostInformation();
+    /**
+     * Returns the value of the Cost-Information AVP, of type Grouped.
+     *
+     * @return
+     */
+    CostInformationAvp getCostInformation();
 
-  /**
-   * Sets the value of the Cost-Information AVP, of type Grouped.
-   * 
-   * @param costInformation
-   * @throws IllegalStateException
-   */
-  void setCostInformation(CostInformationAvp costInformation) throws IllegalStateException;
+    /**
+     * Sets the value of the Cost-Information AVP, of type Grouped.
+     *
+     * @param costInformation
+     * @throws IllegalStateException
+     */
+    void setCostInformation(CostInformationAvp costInformation) throws IllegalStateException;
 
-  /**
-   * Returns true if the Cost-Information AVP is present in the message.
-   * 
-   * @return
-   */
-  boolean hasCostInformation();
+    /**
+     * Returns true if the Cost-Information AVP is present in the message.
+     *
+     * @return
+     */
+    boolean hasCostInformation();
 
-  /**
+    /**
+     * Returns the value of the Remaining-Balance AVP, of type Grouped.
+     *
+     * @return
+     */
+    RemainingBalance getRemainingBalance();
+
+    /**
+     * Sets the value of the Remaining-Balance AVP, of type Grouped.
+     *
+     * @param remainingBalance
+     * @throws IllegalStateException
+     */
+    void setRemainingBalance(RemainingBalance remainingBalance) throws IllegalStateException;
+
+    /**
+     * Returns true if the Remaining-Balance AVP is present in the message.
+     *
+     * @return
+     */
+    boolean hasRemainingBalance();
+
+    /**
    * Returns the value of the Credit-Control-Failure-Handling AVP, of type
    * Enumerated.
    * 

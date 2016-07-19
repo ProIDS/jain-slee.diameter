@@ -297,6 +297,8 @@ public class DiameterRoAvpCodes
     public static final DiameterAvpType RECIPIENT_RECEIVED_ADDRESS_AVP_TYPE = DiameterAvpType.fromString("Grouped");
     public static final int RECIPIENT_SCCP_ADDRESS = 2010;
     public static final DiameterAvpType RECIPIENT_SCCP_ADDRESS_AVP_TYPE = DiameterAvpType.fromString("Address");
+    public static final int REMAINING_BALANCE = 2021;
+    public static final DiameterAvpType REMAINING_BALANCE_AVP_TYPE = DiameterAvpType.fromString("Grouped");
   public static final int REPLY_APPLIC_ID = 1223;
   public static final DiameterAvpType REPLY_APPLIC_ID_AVP_TYPE = DiameterAvpType.fromString("UTF8String");
     public static final int REPLY_PATH_REQUESTED = 2011;

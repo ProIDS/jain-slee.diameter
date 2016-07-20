@@ -34,6 +34,7 @@ import net.java.slee.resource.diameter.ro.events.avp.ServiceInformation;
  * 
  * @author <a href="mailto:baranowb@gmail.com"> Bartosz Baranowski </a>
  * @author <a href="mailto:brainslog@gmail.com"> Alexandre Mendonca </a>
+ * @author <a href="mailto:grzegorz.figiel@pro-ids.com"> Grzegorz Figiel [ProIDS] </a>
  */
 public interface RoCreditControlMessage extends DiameterMessage {
 
@@ -67,7 +68,7 @@ public interface RoCreditControlMessage extends DiameterMessage {
   long getCcRequestNumber();
 
   /**
-   * Sets the value of the CC-Request-Number AVP, of type Unsigned32.
+   * Sets the value of the CC-Request-Number AVP, of type Unsigned32. In case the AVP exists it will be reset with a new value.
    * 
    * @param ccRequestNumber
    * @throws IllegalStateException

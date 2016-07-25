@@ -224,10 +224,10 @@ public class AvpUtilities {
                 if (set.getAvp(avpCode) == null) {
                     // (...) the Session-Id SHOULD appear immediately following the Diameter Header
                     set.insertAvp(0, avpCode, value, vendorId, isMandatory, isProtected, isOctetString);
-                    //TODO: according to interface Javadoc exception should be throws hoever living another apporoach
-//            throw new IllegalStateException("Session-ID has been already set for this Diameter Message");
                 } else {
-                    logger.warn("Trying to add another Session-ID AVP with value " + value + ". Current value will not be changed.");
+                    logger.warn("Updating already set Session-ID AVP with value " + value);
+                    set.removeAvpByIndex(0);
+                    set.insertAvp(0, avpCode, value, vendorId, isMandatory, isProtected, isOctetString);
                 }
                 break;
             case Avp.ORIGIN_HOST:
@@ -473,10 +473,10 @@ public class AvpUtilities {
                 if (set.getAvp(avpCode) == null) {
                     // (...) the Session-Id SHOULD appear immediately following the Diameter Header
                     set.insertAvp(0, avpCode, value, vendorId, isMandatory, isProtected, false);
-                    //TODO: according to interface Javadoc exception should be throws hoever living another apporoach
-//            throw new IllegalStateException("Session-ID has been already set for this Diameter Message");
                 } else {
-                    logger.warn("Trying to add another Session-ID AVP with value " + value + ". Current value will not be changed.");
+                    logger.warn("Updating already set Session-ID AVP with value " + value);
+                    set.removeAvpByIndex(0);
+                    set.insertAvp(0, avpCode, value, vendorId, isMandatory, isProtected, false);
                 }
                 break;
             case Avp.ORIGIN_HOST:
@@ -1572,10 +1572,10 @@ public class AvpUtilities {
                 if (set.getAvp(avpCode) == null) {
                     // (...) the Session-Id SHOULD appear immediately following the Diameter Header
                     set.insertAvp(0, avpCode, value, vendorId, isMandatory, isProtected);
-                    //TODO: according to interface Javadoc exception should be throws hoever living another apporoach
-//            throw new IllegalStateException("Session-ID has been already set for this Diameter Message");
                 } else {
-                    logger.warn("Trying to add another Session-ID AVP with value " + value + ". Current value will not be changed.");
+                    logger.warn("Updating already set Session-ID AVP with value " + value);
+                    set.removeAvpByIndex(0);
+                    set.insertAvp(0, avpCode, value, vendorId, isMandatory, isProtected);
                 }
                 break;
             case Avp.ORIGIN_HOST:
@@ -2170,10 +2170,10 @@ public class AvpUtilities {
                     if (set.getAvp(avpCode) == null) {
                         // (...) the Session-Id SHOULD appear immediately following the Diameter Header
                         set.insertAvp(0, avpCode, avp.byteArrayValue(), avp.getVendorId(), avp.getMandatoryRule() != DiameterAvp.FLAG_RULE_MUSTNOT, avp.getProtectedRule() == DiameterAvp.FLAG_RULE_MUST);
-                        //TODO: according to interface Javadoc exception should be throws hoever living another apporoach
-//            throw new IllegalStateException("Session-ID has been already set for this Diameter Message");
                     } else {
-                        logger.warn("Trying to add another Session-ID AVP with value " + avp.byteArrayValue() + ". Current value will not be changed.");
+                        logger.warn("Updating already set Session-ID AVP with value " + avp.stringValue());
+                        set.removeAvpByIndex(0);
+                        set.insertAvp(0, avpCode, avp.byteArrayValue(), avp.getVendorId(), avp.getMandatoryRule() != DiameterAvp.FLAG_RULE_MUSTNOT, avp.getProtectedRule() == DiameterAvp.FLAG_RULE_MUST);
                     }
                     break;
                 case Avp.ORIGIN_HOST:

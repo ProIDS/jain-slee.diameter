@@ -22,13 +22,6 @@
 
 package org.mobicents.slee.resource.diameter.base.events.avp;
 
-import java.io.Externalizable;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-
 import net.java.slee.resource.diameter.base.events.avp.Address;
 import net.java.slee.resource.diameter.base.events.avp.AvpNotAllowedException;
 import net.java.slee.resource.diameter.base.events.avp.AvpUtilities;
@@ -38,13 +31,19 @@ import net.java.slee.resource.diameter.base.events.avp.DiameterIdentity;
 import net.java.slee.resource.diameter.base.events.avp.DiameterURI;
 import net.java.slee.resource.diameter.base.events.avp.GroupedAvp;
 import net.java.slee.resource.diameter.base.events.avp.IPFilterRule;
-
 import org.apache.log4j.Logger;
 import org.jdiameter.api.Avp;
 import org.jdiameter.api.AvpDataException;
 import org.jdiameter.api.AvpSet;
 import org.mobicents.diameter.dictionary.AvpDictionary;
 import org.mobicents.diameter.dictionary.AvpRepresentation;
+
+import java.io.Externalizable;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 
@@ -53,6 +52,7 @@ import org.mobicents.diameter.dictionary.AvpRepresentation;
  * @author <a href = "mailto:baranowb@gmail.com"> Bartosz Baranowski </a> 
  * @author <a href = "mailto:brainslog@gmail.com"> Alexandre Mendonca </a> 
  * @author Erick Svenson
+ * @author <a href="mailto:grzegorz.figiel@pro-ids.com"> Grzegorz Figiel (ProIDS sp. z o.o.)</a>
  */
 public class GroupedAvpImpl extends DiameterAvpImpl implements GroupedAvp , Externalizable {
 
@@ -64,8 +64,30 @@ public class GroupedAvpImpl extends DiameterAvpImpl implements GroupedAvp , Exte
     super();
   }
 
-  public GroupedAvpImpl(int code, long vendorId, int mnd, int prt, byte[] value) {
-    super(code, vendorId, mnd, prt, value, DiameterAvpType.GROUPED);
+    /**
+     * @deprecated
+     *
+     * @param code
+     * @param vendorId
+     * @param mnd
+     * @param prt
+     * @param value
+     */
+    public GroupedAvpImpl(int code, long vendorId, int mnd, int prt, byte[] value) {
+        this(code, vendorId, null, mnd, prt, value);
+    }
+
+    /**
+     *
+     * @param code
+     * @param vendorId
+     * @param name
+     * @param mnd
+     * @param prt
+     * @param value
+     */
+    public GroupedAvpImpl(int code, long vendorId, String name, int mnd, int prt, byte[] value) {
+    super(code, vendorId, name, mnd, prt, value, DiameterAvpType.GROUPED);
 
     try {
       avpSet = AvpUtilities.getParser().decodeAvpSet(value);
@@ -164,27 +186,27 @@ public class GroupedAvpImpl extends DiameterAvpImpl implements GroupedAvp , Exte
       if(avpRep != null) {
         if(avpRep.isGrouped()) {
           AvpSet grouped = a.getGrouped(); // warning, this changes getRaw to return byte[0] if successful
-          GroupedAvpImpl gAVP = new GroupedAvpImpl(a.getCode(), a.getVendorId(),
+          GroupedAvpImpl gAVP = new GroupedAvpImpl(a.getCode(), a.getVendorId(), avpRep.getName(),
               a.isMandatory() ? DiameterAvp.FLAG_RULE_MUST : DiameterAvp.FLAG_RULE_MUSTNOT, a.isEncrypted() ? DiameterAvp.FLAG_RULE_MUST : DiameterAvp.FLAG_RULE_MUSTNOT, a.getRaw());
 
           gAVP.setExtensionAvps(getExtensionAvpsInternal(grouped));
           avps.add(gAVP);
         }        
         else {
-          avps.add(new DiameterAvpImpl(a.getCode(), a.getVendorId(), a.isMandatory() ? DiameterAvp.FLAG_RULE_MUST : DiameterAvp.FLAG_RULE_MUSTNOT, a.isEncrypted() ? DiameterAvp.FLAG_RULE_MUST : DiameterAvp.FLAG_RULE_MUSTNOT, a.getRaw(), DiameterAvpType.fromString(avpRep.getType())));
+          avps.add(new DiameterAvpImpl(a.getCode(), a.getVendorId(), avpRep.getName(), a.isMandatory() ? DiameterAvp.FLAG_RULE_MUST : DiameterAvp.FLAG_RULE_MUSTNOT, a.isEncrypted() ? DiameterAvp.FLAG_RULE_MUST : DiameterAvp.FLAG_RULE_MUSTNOT, a.getRaw(), DiameterAvpType.fromString(avpRep.getType())));
         }
       }
       else { // we don't have it in dictionary
         try {
           AvpSet grouped = a.getGrouped(); // warning, this changes getRaw to return byte[0] if successful
-          GroupedAvpImpl gAVP = new GroupedAvpImpl(a.getCode(), a.getVendorId(),
+          GroupedAvpImpl gAVP = new GroupedAvpImpl(a.getCode(), a.getVendorId(), DiameterAvpImpl.AVP_UNDEFINED_NAME,
               a.isMandatory() ? DiameterAvp.FLAG_RULE_MUST : DiameterAvp.FLAG_RULE_MUSTNOT, a.isEncrypted() ? DiameterAvp.FLAG_RULE_MUST : DiameterAvp.FLAG_RULE_MUSTNOT, a.getRaw());
 
           gAVP.setExtensionAvps(getExtensionAvpsInternal(grouped));
           avps.add(gAVP);
         }
         catch (AvpDataException ade) {
-          avps.add(new DiameterAvpImpl(a.getCode(), a.getVendorId(), a.isMandatory() ? DiameterAvp.FLAG_RULE_MUST : DiameterAvp.FLAG_RULE_MUSTNOT, a.isEncrypted() ? DiameterAvp.FLAG_RULE_MUST : DiameterAvp.FLAG_RULE_MUSTNOT, a.getRaw(), null));
+          avps.add(new DiameterAvpImpl(a.getCode(), a.getVendorId(), DiameterAvpImpl.AVP_UNDEFINED_NAME, a.isMandatory() ? DiameterAvp.FLAG_RULE_MUST : DiameterAvp.FLAG_RULE_MUSTNOT, a.isEncrypted() ? DiameterAvp.FLAG_RULE_MUST : DiameterAvp.FLAG_RULE_MUSTNOT, a.getRaw(), null));
         }
       }
     }

@@ -22,10 +22,6 @@
 
 package org.mobicents.slee.resource.diameter.base.events;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import net.java.slee.resource.diameter.base.events.DiameterCommand;
 import net.java.slee.resource.diameter.base.events.DiameterHeader;
 import net.java.slee.resource.diameter.base.events.DiameterMessage;
@@ -41,7 +37,6 @@ import net.java.slee.resource.diameter.base.events.avp.IPFilterRule;
 import net.java.slee.resource.diameter.base.events.avp.ProxyInfoAvp;
 import net.java.slee.resource.diameter.base.events.avp.RedirectHostUsageType;
 import net.java.slee.resource.diameter.base.events.avp.VendorSpecificApplicationIdAvp;
-
 import org.apache.log4j.Logger;
 import org.jdiameter.api.Avp;
 import org.jdiameter.api.AvpDataException;
@@ -54,6 +49,10 @@ import org.mobicents.slee.resource.diameter.base.events.avp.FailedAvpImpl;
 import org.mobicents.slee.resource.diameter.base.events.avp.GroupedAvpImpl;
 import org.mobicents.slee.resource.diameter.base.events.avp.ProxyInfoAvpImpl;
 import org.mobicents.slee.resource.diameter.base.events.avp.VendorSpecificApplicationIdAvpImpl;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Super class for all diameter messages <br>
@@ -459,7 +458,7 @@ public abstract class DiameterMessageImpl implements DiameterMessage {
       else {
         if (avpRep.getType().equals("Grouped")) {
           // TODO: There's no info about if AVP has mandatory or protected flags set...
-          GroupedAvpImpl gAVP = new GroupedAvpImpl(a.getCode(), a.getVendorId(), avpRep.getRuleMandatoryAsInt(), avpRep.getRuleProtectedAsInt(), a.getRaw());
+          GroupedAvpImpl gAVP = new GroupedAvpImpl(a.getCode(), a.getVendorId(), avpRep.getName(), avpRep.getRuleMandatoryAsInt(), avpRep.getRuleProtectedAsInt(), a.getRaw());
 
           gAVP.setExtensionAvps(getAvpsInternal(a.getGrouped()));
 
@@ -468,7 +467,7 @@ public abstract class DiameterMessageImpl implements DiameterMessage {
         }
         else {
           // TODO: There's no info about if AVP has mandatory or protected flags set...
-          avps.add(new DiameterAvpImpl(a.getCode(), a.getVendorId(), avpRep.getRuleMandatoryAsInt(), avpRep.getRuleProtectedAsInt(), a.getRaw(), DiameterAvpType.fromString(avpRep.getType())));
+          avps.add(new DiameterAvpImpl(a.getCode(), a.getVendorId(), avpRep.getName(), avpRep.getRuleMandatoryAsInt(), avpRep.getRuleProtectedAsInt(), a.getRaw(), DiameterAvpType.fromString(avpRep.getType())));
         }
       }
     }

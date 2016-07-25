@@ -1,19 +1,8 @@
 package org.mobicents.slee.resource.diameter.base.tests.avp;
 
-import static org.jdiameter.client.impl.helpers.Parameters.*;
-import static org.jdiameter.server.impl.helpers.Parameters.*;
-
-import static org.junit.Assert.fail;
-
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-
 import net.java.slee.resource.diameter.base.events.avp.AvpNotAllowedException;
 import net.java.slee.resource.diameter.base.events.avp.AvpUtilities;
 import net.java.slee.resource.diameter.base.events.avp.DiameterAvpType;
-
 import org.jdiameter.api.Avp;
 import org.jdiameter.api.AvpSet;
 import org.jdiameter.api.Mode;
@@ -30,6 +19,32 @@ import org.mobicents.slee.resource.diameter.base.DiameterMessageFactoryImpl;
 import org.mobicents.slee.resource.diameter.base.events.AccountingRequestImpl;
 import org.mobicents.slee.resource.diameter.base.events.DiameterMessageImpl;
 import org.mobicents.slee.resource.diameter.base.events.avp.DiameterAvpImpl;
+
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import static org.jdiameter.client.impl.helpers.Parameters.AcctApplId;
+import static org.jdiameter.client.impl.helpers.Parameters.ApplicationId;
+import static org.jdiameter.client.impl.helpers.Parameters.Assembler;
+import static org.jdiameter.client.impl.helpers.Parameters.AuthApplId;
+import static org.jdiameter.client.impl.helpers.Parameters.OwnDiameterURI;
+import static org.jdiameter.client.impl.helpers.Parameters.OwnRealm;
+import static org.jdiameter.client.impl.helpers.Parameters.OwnVendorID;
+import static org.jdiameter.client.impl.helpers.Parameters.PeerName;
+import static org.jdiameter.client.impl.helpers.Parameters.PeerRating;
+import static org.jdiameter.client.impl.helpers.Parameters.PeerTable;
+import static org.jdiameter.client.impl.helpers.Parameters.RealmEntry;
+import static org.jdiameter.client.impl.helpers.Parameters.RealmTable;
+import static org.jdiameter.client.impl.helpers.Parameters.VendorId;
+import static org.jdiameter.server.impl.helpers.Parameters.PeerAttemptConnection;
+import static org.jdiameter.server.impl.helpers.Parameters.RealmEntryExpTime;
+import static org.jdiameter.server.impl.helpers.Parameters.RealmEntryIsDynamic;
+import static org.jdiameter.server.impl.helpers.Parameters.RealmHosts;
+import static org.jdiameter.server.impl.helpers.Parameters.RealmLocalAction;
+import static org.jdiameter.server.impl.helpers.Parameters.RealmName;
+import static org.junit.Assert.fail;
 
 /**
  * 
@@ -260,7 +275,7 @@ public class AvpUtilitiesTest {
 	    instance.setEnabled(true);
 
 	    // It has session id
-	    AccountingRequestImpl request = (AccountingRequestImpl) baseFactory.createAccountingRequest(new DiameterAvpImpl[] { new DiameterAvpImpl(263, 0L, 0, 1,
+	    AccountingRequestImpl request = (AccountingRequestImpl) baseFactory.createAccountingRequest(new DiameterAvpImpl[] { new DiameterAvpImpl(263, 0L, "Session-Id", 0, 1,
 	        "xxx".getBytes(), DiameterAvpType.UTF8_STRING) });
 
 	    // <avp name="Session-Id" code="263" vendor="0" multiplicity="1" index="0"/>

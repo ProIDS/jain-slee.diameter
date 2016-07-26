@@ -220,9 +220,9 @@ public class AvpUtilities {
 
         switch (avpCode) {
             case Avp.SESSION_ID:
-                //(...) All messages pertaining to a specific session MUST include only one Session-Id AVP (...)
-                if (set.getAvp(avpCode) == null) {
-                    // (...) the Session-Id SHOULD appear immediately following the Diameter Header
+        //(...) All messages pertaining to a specific session MUST include only one Session-Id AVP (...)
+        set.removeAvp(avpCode);
+        // (...) the Session-Id SHOULD appear immediately following the Diameter Header
                     set.insertAvp(0, avpCode, value, vendorId, isMandatory, isProtected, isOctetString);
                 } else {
                     logger.warn("Updating already set Session-ID AVP with value " + value);
@@ -469,9 +469,9 @@ public class AvpUtilities {
 
         switch (avpCode) {
             case Avp.SESSION_ID:
-                //(...) All messages pertaining to a specific session MUST include only one Session-Id AVP (...)
-                if (set.getAvp(avpCode) == null) {
-                    // (...) the Session-Id SHOULD appear immediately following the Diameter Header
+        //(...) All messages pertaining to a specific session MUST include only one Session-Id AVP (...)
+        set.removeAvp(avpCode);
+        // (...) the Session-Id SHOULD appear immediately following the Diameter Header
                     set.insertAvp(0, avpCode, value, vendorId, isMandatory, isProtected, false);
                 } else {
                     logger.warn("Updating already set Session-ID AVP with value " + value);
@@ -1568,8 +1568,8 @@ public class AvpUtilities {
 
         switch (avpCode) {
             case Avp.SESSION_ID:
-                //(...) All messages pertaining to a specific session MUST include only one Session-Id AVP (...)
-                if (set.getAvp(avpCode) == null) {
+        //(...) All messages pertaining to a specific session MUST include only one Session-Id AVP (...)
+        set.removeAvp(avpCode);
                     // (...) the Session-Id SHOULD appear immediately following the Diameter Header
                     set.insertAvp(0, avpCode, value, vendorId, isMandatory, isProtected);
                 } else {
@@ -2165,11 +2165,11 @@ public class AvpUtilities {
             }
         } else {
             switch (avpCode) {
-                case Avp.SESSION_ID:
-                    //(...) All messages pertaining to a specific session MUST include only one Session-Id AVP (...)
-                    if (set.getAvp(avpCode) == null) {
-                        // (...) the Session-Id SHOULD appear immediately following the Diameter Header
-                        set.insertAvp(0, avpCode, avp.byteArrayValue(), avp.getVendorId(), avp.getMandatoryRule() != DiameterAvp.FLAG_RULE_MUSTNOT, avp.getProtectedRule() == DiameterAvp.FLAG_RULE_MUST);
+        case Avp.SESSION_ID:
+            //(...) All messages pertaining to a specific session MUST include only one Session-Id AVP (...)
+            set.removeAvp(avpCode);
+            // (...) the Session-Id SHOULD appear immediately following the Diameter Header
+            set.insertAvp(0, avpCode, avp.byteArrayValue(), avp.getVendorId(), avp.getMandatoryRule() != DiameterAvp.FLAG_RULE_MUSTNOT, avp.getProtectedRule() == DiameterAvp.FLAG_RULE_MUST);
                     } else {
                         logger.warn("Updating already set Session-ID AVP with value " + avp.stringValue());
                         set.removeAvpByIndex(0);

@@ -631,7 +631,12 @@ public class AvpUtilities {
       int position = set.getAvpIndex(avpCode);
       set.removeAvpByIndex(position);
       set.insertAvp(position, avpCode, value, vendorId, isMandatory, isProtected, true);
-    } else {
+    } else if (Avp.AUTH_APPLICATION_ID == avpCode && set.getAvp(avpCode) != null) {
+      logger.debug("Updating Auth-Application-Id AVP with value " + value + ".");
+      int position = set.getAvpIndex(avpCode);
+      set.removeAvpByIndex(position);
+      set.insertAvp(position, avpCode, value, vendorId, isMandatory, isProtected, true);
+    }  else {
       set.addAvp(avpCode, value, vendorId, isMandatory, isProtected, true);
     }
   }

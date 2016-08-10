@@ -739,7 +739,7 @@ public class DiameterRoResourceAdaptor implements ResourceAdaptor, DiameterListe
       activities.put(activity.getActivityHandle(), activity);
 
       if(tracer.isInfoEnabled()) {
-        tracer.info("Activity started [" + activity.getActivityHandle() + "]");
+        tracer.info("Activity started [" + activity.getActivityHandle() + "] with suspended=" + suspended);
       }
     }
     catch (Exception e) {
@@ -999,7 +999,7 @@ public class DiameterRoResourceAdaptor implements ResourceAdaptor, DiameterListe
     //FIXME: baranowb: add basic session mgmt for base? or do we rely on responses?
     //session.addStateChangeNotification(activity);
     activity.setSessionListener(this);
-    addActivity(activity, false /*true*/);
+    addActivity(activity, true);
   }
 
   public void sessionCreated(ServerRoSession ccServerSession)

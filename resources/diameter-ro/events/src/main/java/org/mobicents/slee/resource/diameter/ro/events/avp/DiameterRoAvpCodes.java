@@ -331,6 +331,10 @@ public class DiameterRoAvpCodes
   public static final DiameterAvpType SERVICE_INFORMATION_AVP_TYPE = DiameterAvpType.fromString("Grouped");
   public static final int SERVICE_SPECIFIC_DATA = 863;
   public static final DiameterAvpType SERVICE_SPECIFIC_DATA_AVP_TYPE = DiameterAvpType.fromString("UTF8String");
+    public static final int SERVICE_SPECIFIC_INFO = 1249;
+    public static final DiameterAvpType SERVICE_SPECIFIC_INFO_AVP_TYPE = DiameterAvpType.fromString("Grouped");
+    public static final int SERVICE_SPECIFIC_TYPE = 1257;
+    public static final DiameterAvpType SERVICE_SPECIFIC_TYPE_AVP_TYPE = DiameterAvpType.fromString("Unsigned32");
   public static final int SGSN_ADDRESS = 1228;
   public static final DiameterAvpType SGSN_ADDRESS_AVP_TYPE = DiameterAvpType.fromString("Address");
   public static final int SIP_METHOD = 824;

@@ -55,6 +55,7 @@ import net.java.slee.resource.diameter.ro.events.avp.RecipientAddress;
 import net.java.slee.resource.diameter.ro.events.avp.RecipientInfo;
 import net.java.slee.resource.diameter.ro.events.avp.SdpMediaComponent;
 import net.java.slee.resource.diameter.ro.events.avp.ServiceInformation;
+import net.java.slee.resource.diameter.ro.events.avp.ServiceSpecificInfo;
 import net.java.slee.resource.diameter.ro.events.avp.SmsInformation;
 import net.java.slee.resource.diameter.ro.events.avp.TalkBurstExchange;
 import net.java.slee.resource.diameter.ro.events.avp.TimeStamps;
@@ -88,6 +89,7 @@ import org.mobicents.slee.resource.diameter.ro.events.avp.RecipientAddressImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.RecipientInfoImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.SdpMediaComponentImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.ServiceInformationImpl;
+import org.mobicents.slee.resource.diameter.ro.events.avp.ServiceSpecificInfoImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.SmsInformationImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.TalkBurstExchangeImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.TimeStampsImpl;
@@ -240,6 +242,10 @@ public class RoAvpFactoryImpl extends CreditControlAVPFactoryImpl implements RoA
 
   public ServiceInformation createServiceInformation() {
     return (ServiceInformation) AvpUtilities.createAvp(DiameterRoAvpCodes.SERVICE_INFORMATION, DiameterRoAvpCodes.TGPP_VENDOR_ID, null, ServiceInformationImpl.class);
+  }
+
+  public ServiceSpecificInfo createServiceSpecificInfo() {
+    return (ServiceSpecificInfo) AvpUtilities.createAvp(DiameterRoAvpCodes.SERVICE_SPECIFIC_INFO, DiameterRoAvpCodes.TGPP_VENDOR_ID, null, ServiceSpecificInfoImpl.class);
   }
 
   public SmsInformation createSmsInformation() {

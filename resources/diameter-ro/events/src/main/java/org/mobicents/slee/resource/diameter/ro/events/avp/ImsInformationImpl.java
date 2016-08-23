@@ -32,9 +32,9 @@ import net.java.slee.resource.diameter.ro.events.avp.NodeFunctionality;
 import net.java.slee.resource.diameter.ro.events.avp.RoleOfNode;
 import net.java.slee.resource.diameter.ro.events.avp.SdpMediaComponent;
 import net.java.slee.resource.diameter.ro.events.avp.ServerCapabilities;
+import net.java.slee.resource.diameter.ro.events.avp.ServiceSpecificInfo;
 import net.java.slee.resource.diameter.ro.events.avp.TimeStamps;
 import net.java.slee.resource.diameter.ro.events.avp.TrunkGroupId;
-
 import org.mobicents.slee.resource.diameter.base.events.avp.GroupedAvpImpl;
 
 /**
@@ -181,6 +181,15 @@ public class ImsInformationImpl extends GroupedAvpImpl implements ImsInformation
    */
   public String getServiceId() {
     return getAvpAsUTF8String(DiameterRoAvpCodes.SERVICE_ID, DiameterRoAvpCodes.TGPP_VENDOR_ID);
+  }
+
+  /*
+   * (non-Javadoc)
+   *
+   * @see net.java.slee.resource.diameter.cca.events.avp.MultipleServicesCreditControl#getServiceSpecificInfos()
+   */
+  public ServiceSpecificInfo[] getServiceSpecificInfos() {
+    return (ServiceSpecificInfo[]) getAvpsAsCustom(DiameterRoAvpCodes.SERVICE_SPECIFIC_INFO, ServiceSpecificInfoImpl.class);
   }
 
   /* (non-Javadoc)
@@ -486,6 +495,26 @@ public class ImsInformationImpl extends GroupedAvpImpl implements ImsInformation
    */
   public void setServiceId( String serviceId ) {
     addAvp(DiameterRoAvpCodes.SERVICE_ID, DiameterRoAvpCodes.TGPP_VENDOR_ID, serviceId);
+  }
+
+  /*
+   * (non-Javadoc)
+   *
+   * @see net.java.slee.resource.diameter.cca.events.avp.MultipleServicesCreditControlAvp#setServiceSpecificInfo(net.java.slee.resource.diameter.cca.events.avp.ServiceSpecificInfo)
+   */
+  public void setServiceSpecificInfo(ServiceSpecificInfo serviceSpecificInfo) {
+    addAvp(DiameterRoAvpCodes.SERVICE_SPECIFIC_INFO, serviceSpecificInfo.byteArrayValue());
+  }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see net.java.slee.resource.diameter.cca.events.avp.MultipleServicesCreditControlAvp#setServiceSpecificInfos(net.java.slee.resource.diameter.cca.events.avp.ServiceSpecificInfo[])
+     */
+  public void setServiceSpecificInfos(ServiceSpecificInfo[] serviceSpecificInfos) {
+    for(ServiceSpecificInfo serviceSpecificInfo : serviceSpecificInfos) {
+      setServiceSpecificInfo(serviceSpecificInfo);
+    }
   }
 
   /* (non-Javadoc)

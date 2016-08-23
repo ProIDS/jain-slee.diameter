@@ -20,6 +20,7 @@
 package org.mobicents.slee.resource.diameter.ro.events.avp;
 
 import net.java.slee.resource.diameter.ro.events.avp.MultipleServicesCreditControl;
+import net.java.slee.resource.diameter.ro.events.avp.ServiceSpecificInfo;
 import org.mobicents.slee.resource.diameter.cca.events.avp.MultipleServicesCreditControlAvpImpl;
 
 /**
@@ -56,6 +57,15 @@ public class MultipleServicesCreditControlImpl extends MultipleServicesCreditCon
 		return getAvpAsUnsigned32(DiameterRoAvpCodes.UNIT_QUOTA_THRESHOLD);
 	}
 
+	/*
+     * (non-Javadoc)
+     *
+     * @see net.java.slee.resource.diameter.cca.events.avp.MultipleServicesCreditControl#getServiceSpecificInfos()
+     */
+	public ServiceSpecificInfo[] getServiceSpecificInfos() {
+		return (ServiceSpecificInfo[]) getAvpsAsCustom(DiameterRoAvpCodes.SERVICE_SPECIFIC_INFO, ServiceSpecificInfoImpl.class);
+	}
+
 	/**
 	 * (non-Javadoc)
 	 *
@@ -74,6 +84,26 @@ public class MultipleServicesCreditControlImpl extends MultipleServicesCreditCon
 	 */
 	public void setUnitQuotaThreshold(long validityTime) {
 		addAvp(DiameterRoAvpCodes.UNIT_QUOTA_THRESHOLD, validityTime);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see net.java.slee.resource.diameter.cca.events.avp.MultipleServicesCreditControlAvp#setServiceSpecificInfo(net.java.slee.resource.diameter.cca.events.avp.ServiceSpecificInfo)
+	 */
+	public void setServiceSpecificInfo(ServiceSpecificInfo serviceSpecificInfo) {
+		addAvp(DiameterRoAvpCodes.SERVICE_SPECIFIC_INFO, serviceSpecificInfo.byteArrayValue());
+	}
+
+	/*
+     * (non-Javadoc)
+     *
+     * @see net.java.slee.resource.diameter.cca.events.avp.MultipleServicesCreditControlAvp#setServiceSpecificInfos(net.java.slee.resource.diameter.cca.events.avp.ServiceSpecificInfo[])
+     */
+	public void setServiceSpecificInfos(ServiceSpecificInfo[] serviceSpecificInfos) {
+		for(ServiceSpecificInfo serviceSpecificInfo : serviceSpecificInfos) {
+			setServiceSpecificInfo(serviceSpecificInfo);
+		}
 	}
 
 }

@@ -53,7 +53,7 @@ import net.java.slee.resource.diameter.cca.events.avp.MultipleServicesCreditCont
  *     			* [ Envelope ]				NOT IMPLEMENTED
  *     			[ Envelope-Reporting ]		NOT IMPLEMENTED
  *     			[ Time-Quota-Mechanism ]	NOT IMPLEMENTED
- *     			* [ Service-Specific-Info ]	NOT IMPLEMENTED
+ *     			* [ Service-Specific-Info ]
  *     			[ QoS-Information ]			NOT IMPLEMENTED
  *
  * </pre>
@@ -71,6 +71,16 @@ public interface MultipleServicesCreditControl extends MultipleServicesCreditCon
 	long getUnitQuotaThreshold();
 
 	/**
+	 * Returns the set of Service-Specific-Info AVPs. The returned array contains
+	 * the AVPs in the order they appear in the message. A return value of null
+	 * implies that no Service-Specific-Info AVPs have been set. <br>
+	 * See: {@link ServiceSpecificInfo}.
+	 *
+	 * @return
+	 */
+	ServiceSpecificInfo[] getServiceSpecificInfos();
+
+	/**
 	 * Returns true if the Unit-Quota-Threshold AVP is present in the message.
 	 *
 	 * @return
@@ -83,5 +93,22 @@ public interface MultipleServicesCreditControl extends MultipleServicesCreditCon
 	 * @param unitQuotaThreshold
 	 */
 	void setUnitQuotaThreshold(long unitQuotaThreshold);
+
+	/**
+	 * Sets a single Service-Specific-Info AVP in the message, of type Grouped. <br>
+	 * See: {@link ServiceSpecificInfo}
+	 *
+	 * @param serviceSpecificInfo
+	 */
+	void setServiceSpecificInfo(ServiceSpecificInfo serviceSpecificInfo);
+
+	/**
+	 * Sets the set of Service-Specific-Info AVPs, with all the values in the given
+	 * array. <br>
+	 * See: {@link ServiceSpecificInfo}
+	 *
+	 * @param serviceSpecificInfos
+	 */
+	void setServiceSpecificInfos(ServiceSpecificInfo[] serviceSpecificInfos);
 
 }

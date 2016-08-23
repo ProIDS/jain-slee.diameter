@@ -50,6 +50,7 @@ import net.java.slee.resource.diameter.ro.events.avp.PsInformation;
 import net.java.slee.resource.diameter.ro.events.avp.RecipientAddress;
 import net.java.slee.resource.diameter.ro.events.avp.SdpMediaComponent;
 import net.java.slee.resource.diameter.ro.events.avp.ServiceInformation;
+import net.java.slee.resource.diameter.ro.events.avp.ServiceSpecificInfo;
 import net.java.slee.resource.diameter.ro.events.avp.SmsInformation;
 import net.java.slee.resource.diameter.ro.events.avp.TalkBurstExchange;
 import net.java.slee.resource.diameter.ro.events.avp.TimeStamps;
@@ -63,6 +64,7 @@ import net.java.slee.resource.diameter.ro.events.avp.WlanRadioContainer;
  * 
  * @author <a href="mailto:brainslog@gmail.com"> Alexandre Mendonca </a>
  * @author <a href="mailto:baranowb@gmail.com"> Bartosz Baranowski </a>
+ * @author <a href="mailto:grzegorz.figiel@pro-ids.com"> Grzegorz Figiel (ProIDS sp. z o.o.)</a>
  */
 public interface RoAvpFactory extends CreditControlAVPFactory {
 
@@ -265,7 +267,14 @@ public interface RoAvpFactory extends CreditControlAVPFactory {
    */
   public ServiceInformation createServiceInformation();
 
-  /**
+    /**
+     * Create an empty ServiceSpecificInfo (Grouped AVP) instance.
+     *
+     * @return
+     */
+    public ServiceSpecificInfo createServiceSpecificInfo();
+
+    /**
    * Create an empty SmsInformation (Grouped AVP) instance.
    *
    * @return

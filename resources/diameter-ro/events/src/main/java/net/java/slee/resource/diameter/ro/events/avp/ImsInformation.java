@@ -60,7 +60,7 @@ import net.java.slee.resource.diameter.base.events.avp.GroupedAvp;
  *         [ Trunk-Group-ID ]
  *         [ Bearer-Service ]
  *         [ Service-Id ]
- *       * [ Service-Specific-Info ] (name changed not yet implemented)
+ *       * [ Service-Specific-Info ]
  *       * [ Message-Body ]
  *         [ Cause-Code ] 
  *         [ Access-Network-Information ] (not yet implemented)
@@ -71,6 +71,7 @@ import net.java.slee.resource.diameter.base.events.avp.GroupedAvp;
  * @author <a href="mailto:brainslog@gmail.com"> Alexandre Mendonca </a>
  * @author <a href="mailto:baranowb@gmail.com"> Bartosz Baranowski </a>
  * @author <a href="mailto:jacek.stromecki@pro-ids.com"> Jacek Stromecki </a>
+ * @author <a href="mailto:grzegorz.figiel@pro-ids.com"> Grzegorz Figiel (ProIDS sp. z o.o.)</a>
  */
 public interface ImsInformation extends GroupedAvp {
 
@@ -158,6 +159,16 @@ public interface ImsInformation extends GroupedAvp {
    * Returns the value of the Service-Id AVP, of type UTF8String. A return value of null implies that the AVP has not been set.
    */
   abstract String getServiceId();
+
+  /**
+   * Returns the set of Service-Specific-Info AVPs. The returned array contains
+   * the AVPs in the order they appear in the message. A return value of null
+   * implies that no Service-Specific-Info AVPs have been set. <br>
+   * See: {@link ServiceSpecificInfo}.
+   *
+   * @return
+   */
+  ServiceSpecificInfo[] getServiceSpecificInfos();
 
   /**
    * Returns the value of the Service-Specific-Data AVP, of type UTF8String. A return value of null implies that the AVP has not been set.
@@ -368,6 +379,23 @@ public interface ImsInformation extends GroupedAvp {
    * Sets the value of the Service-Id AVP, of type UTF8String.
    */
   abstract void setServiceId(String serviceId);
+
+  /**
+   * Sets a single Service-Specific-Info AVP in the message, of type Grouped. <br>
+   * See: {@link ServiceSpecificInfo}
+   *
+   * @param serviceSpecificInfo
+   */
+  void setServiceSpecificInfo(ServiceSpecificInfo serviceSpecificInfo);
+
+  /**
+   * Sets the set of Service-Specific-Info AVPs, with all the values in the given
+   * array. <br>
+   * See: {@link ServiceSpecificInfo}
+   *
+   * @param serviceSpecificInfos
+   */
+  void setServiceSpecificInfos(ServiceSpecificInfo[] serviceSpecificInfos);
 
   /**
    * Sets the value of the Service-Specific-Data AVP, of type UTF8String.

@@ -78,6 +78,9 @@ public abstract class AbstractClusteredDiameterActivityManagement implements Dia
   public DiameterActivity get(DiameterActivityHandle handle) {
     // tricky, now we need remote to kick in.
     // for that some impl methods need to be accessed...
+    if(tracer.isFinestEnabled()) {
+        tracer.finest("Handle ID: " + handle.getId() + " ReplicatedData Keyset: " + this.replicatedData.getKeyset());
+    }
     DiameterActivityImpl activity = (DiameterActivityImpl) this.replicatedData.get(handle.getId());
     //FIXME: add check for RA
     if (activity != null) {

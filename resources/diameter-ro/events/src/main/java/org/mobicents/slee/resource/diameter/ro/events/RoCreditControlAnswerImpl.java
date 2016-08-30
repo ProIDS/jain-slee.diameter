@@ -117,7 +117,7 @@ public class RoCreditControlAnswerImpl extends RoCreditControlMessageImpl implem
    * @throws IllegalStateException
    */
   public void setRemainingBalance(RemainingBalance remainingBalance) throws IllegalStateException {
-    addAvp(DiameterRoAvpCodes.REMAINING_BALANCE, DiameterRoAvpCodes.TGPP_VENDOR_ID, remainingBalance.byteArrayValue());
+    addAvp(DiameterRoAvpCodes.REMAINING_BALANCE, remainingBalance.byteArrayValue());
   }
 
   /**

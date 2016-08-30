@@ -24,7 +24,6 @@ package org.mobicents.slee.resource.diameter.ro.tests.factories;
 
 import net.java.slee.resource.diameter.cca.events.avp.CostInformationAvp;
 import net.java.slee.resource.diameter.cca.events.avp.CreditControlAVPCodes;
-import net.java.slee.resource.diameter.cca.events.avp.MultipleServicesCreditControlAvp;
 import net.java.slee.resource.diameter.cca.events.avp.SubscriptionIdAvp;
 import net.java.slee.resource.diameter.cca.events.avp.UserEquipmentInfoAvp;
 import net.java.slee.resource.diameter.ro.events.avp.AdditionalContentInformation;
@@ -43,11 +42,13 @@ import net.java.slee.resource.diameter.ro.events.avp.MessageBody;
 import net.java.slee.resource.diameter.ro.events.avp.MessageClass;
 import net.java.slee.resource.diameter.ro.events.avp.MmContentType;
 import net.java.slee.resource.diameter.ro.events.avp.MmsInformation;
+import net.java.slee.resource.diameter.ro.events.avp.MultipleServicesCreditControl;
 import net.java.slee.resource.diameter.ro.events.avp.OriginatorAddress;
 import net.java.slee.resource.diameter.ro.events.avp.PocInformation;
 import net.java.slee.resource.diameter.ro.events.avp.PsFurnishChargingInformation;
 import net.java.slee.resource.diameter.ro.events.avp.PsInformation;
 import net.java.slee.resource.diameter.ro.events.avp.RecipientAddress;
+import net.java.slee.resource.diameter.ro.events.avp.RemainingBalance;
 import net.java.slee.resource.diameter.ro.events.avp.SdpMediaComponent;
 import net.java.slee.resource.diameter.ro.events.avp.ServerCapabilities;
 import net.java.slee.resource.diameter.ro.events.avp.ServiceInformation;
@@ -56,9 +57,7 @@ import net.java.slee.resource.diameter.ro.events.avp.TimeStamps;
 import net.java.slee.resource.diameter.ro.events.avp.TrunkGroupId;
 import net.java.slee.resource.diameter.ro.events.avp.WlanInformation;
 import net.java.slee.resource.diameter.ro.events.avp.WlanRadioContainer;
-
 import org.mobicents.slee.resource.diameter.cca.events.avp.CostInformationAvpImpl;
-import org.mobicents.slee.resource.diameter.cca.events.avp.MultipleServicesCreditControlAvpImpl;
 import org.mobicents.slee.resource.diameter.cca.events.avp.SubscriptionIdAvpImpl;
 import org.mobicents.slee.resource.diameter.cca.events.avp.UserEquipmentInfoAvpImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.AdditionalContentInformationImpl;
@@ -78,11 +77,13 @@ import org.mobicents.slee.resource.diameter.ro.events.avp.MessageBodyImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.MessageClassImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.MmContentTypeImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.MmsInformationImpl;
+import org.mobicents.slee.resource.diameter.ro.events.avp.MultipleServicesCreditControlImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.OriginatorAddressImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.PocInformationImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.PsFurnishChargingInformationImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.PsInformationImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.RecipientAddressImpl;
+import org.mobicents.slee.resource.diameter.ro.events.avp.RemainingBalanceImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.SdpMediaComponentImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.ServerCapabilitiesImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.ServiceInformationImpl;
@@ -120,9 +121,9 @@ public class RoAvpAssistant extends org.mobicents.slee.resource.diameter.base.te
 		typeValues.put(CostInformationAvp.class, new CostInformationAvpImpl(CreditControlAVPCodes.Cost_Information, 0L, 0, 1, dummyAvpBytes));
 		typeValues.put(CostInformationAvp[].class, new CostInformationAvpImpl[] { new CostInformationAvpImpl(CreditControlAVPCodes.Cost_Information, 0L, 0, 1, dummyAvpBytes) });
 
-		typeValues.put(MultipleServicesCreditControlAvp.class,
-				new MultipleServicesCreditControlAvpImpl(CreditControlAVPCodes.Multiple_Services_Credit_Control, 0L, 0, 1, dummyAvpBytes));
-		typeValues.put(MultipleServicesCreditControlAvp[].class, new MultipleServicesCreditControlAvpImpl[] { new MultipleServicesCreditControlAvpImpl(
+		typeValues.put(MultipleServicesCreditControl.class,
+				new MultipleServicesCreditControlImpl(CreditControlAVPCodes.Multiple_Services_Credit_Control, 0L, 0, 1, dummyAvpBytes));
+		typeValues.put(MultipleServicesCreditControl[].class, new MultipleServicesCreditControlImpl[] { new MultipleServicesCreditControlImpl(
 				CreditControlAVPCodes.Multiple_Services_Credit_Control, 0L, 0, 1, dummyAvpBytes) });
 
 		typeValues.put(SubscriptionIdAvp.class, new SubscriptionIdAvpImpl(CreditControlAVPCodes.Subscription_Id, 0L, 0, 1, dummyAvpBytes));
@@ -247,6 +248,11 @@ public class RoAvpAssistant extends org.mobicents.slee.resource.diameter.base.te
 		typeValues.put(ServiceInformation.class, new ServiceInformationImpl(DiameterRoAvpCodes.SERVICE_INFORMATION, DiameterRoAvpCodes.TGPP_VENDOR_ID, 0, 1, dummyAvpBytes));
 		typeValues.put(ServiceInformation[].class, new ServiceInformationImpl[] { new ServiceInformationImpl(DiameterRoAvpCodes.SERVICE_INFORMATION, DiameterRoAvpCodes.TGPP_VENDOR_ID,
 				0, 1, dummyAvpBytes) });
+
+		typeValues.put(RemainingBalance.class,
+				new RemainingBalanceImpl(DiameterRoAvpCodes.REMAINING_BALANCE, DiameterRoAvpCodes.TGPP_VENDOR_ID, 0, 1, dummyAvpBytes));
+		typeValues.put(RemainingBalance[].class, new RemainingBalanceImpl[] { new RemainingBalanceImpl(
+				DiameterRoAvpCodes.REMAINING_BALANCE, DiameterRoAvpCodes.TGPP_VENDOR_ID, 0, 1, dummyAvpBytes) });
 
 	}
 

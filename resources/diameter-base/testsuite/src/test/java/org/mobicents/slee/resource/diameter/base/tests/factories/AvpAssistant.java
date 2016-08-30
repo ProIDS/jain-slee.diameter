@@ -22,19 +22,6 @@
 
 package org.mobicents.slee.resource.diameter.base.tests.factories;
 
-import static org.jdiameter.client.impl.helpers.Parameters.*;
-import static org.jdiameter.server.impl.helpers.Parameters.*;
-
-import java.lang.reflect.Array;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-
 import net.java.slee.resource.diameter.base.events.AccountingRequest;
 import net.java.slee.resource.diameter.base.events.CapabilitiesExchangeRequest;
 import net.java.slee.resource.diameter.base.events.DeviceWatchdogRequest;
@@ -51,7 +38,6 @@ import net.java.slee.resource.diameter.base.events.avp.FailedAvp;
 import net.java.slee.resource.diameter.base.events.avp.IPFilterRule;
 import net.java.slee.resource.diameter.base.events.avp.ProxyInfoAvp;
 import net.java.slee.resource.diameter.base.events.avp.VendorSpecificApplicationIdAvp;
-
 import org.jdiameter.api.Avp;
 import org.jdiameter.api.AvpSet;
 import org.jdiameter.api.Message;
@@ -66,6 +52,35 @@ import org.mobicents.slee.resource.diameter.base.events.avp.FailedAvpImpl;
 import org.mobicents.slee.resource.diameter.base.events.avp.GroupedAvpImpl;
 import org.mobicents.slee.resource.diameter.base.events.avp.ProxyInfoAvpImpl;
 import org.mobicents.slee.resource.diameter.base.events.avp.VendorSpecificApplicationIdAvpImpl;
+
+import java.lang.reflect.Array;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+
+import static org.jdiameter.client.impl.helpers.Parameters.AcctApplId;
+import static org.jdiameter.client.impl.helpers.Parameters.ApplicationId;
+import static org.jdiameter.client.impl.helpers.Parameters.Assembler;
+import static org.jdiameter.client.impl.helpers.Parameters.AuthApplId;
+import static org.jdiameter.client.impl.helpers.Parameters.OwnDiameterURI;
+import static org.jdiameter.client.impl.helpers.Parameters.OwnRealm;
+import static org.jdiameter.client.impl.helpers.Parameters.OwnVendorID;
+import static org.jdiameter.client.impl.helpers.Parameters.PeerName;
+import static org.jdiameter.client.impl.helpers.Parameters.PeerRating;
+import static org.jdiameter.client.impl.helpers.Parameters.PeerTable;
+import static org.jdiameter.client.impl.helpers.Parameters.RealmEntry;
+import static org.jdiameter.client.impl.helpers.Parameters.RealmTable;
+import static org.jdiameter.client.impl.helpers.Parameters.VendorId;
+import static org.jdiameter.server.impl.helpers.Parameters.RealmEntryExpTime;
+import static org.jdiameter.server.impl.helpers.Parameters.RealmEntryIsDynamic;
+import static org.jdiameter.server.impl.helpers.Parameters.RealmHosts;
+import static org.jdiameter.server.impl.helpers.Parameters.RealmLocalAction;
+import static org.jdiameter.server.impl.helpers.Parameters.RealmName;
 
 /**
  * 
@@ -313,7 +328,8 @@ public class AvpAssistant {
 						Assert.assertFalse("Message already has value before setting for " + methodName.replaceAll("get", "") + "... aborting", (Boolean) hasAvpBeforeSet);
 					}
 					catch (NoSuchMethodException e) {
-						// skip it...
+						System.err.println("No such method ");
+						e.printStackTrace();
 					}
 
 					Method setter = interfaze.getMethod(methodName.replaceFirst("g", "s"), avpType);

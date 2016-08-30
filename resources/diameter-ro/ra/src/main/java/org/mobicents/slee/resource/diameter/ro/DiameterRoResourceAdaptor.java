@@ -186,7 +186,7 @@ public class DiameterRoResourceAdaptor implements ResourceAdaptor, DiameterListe
 
   // Default Failure Handling
   protected int defaultDirectDebitingFailureHandling = 0;
-  protected int defaultCreditControlFailureHandling = 0;
+  protected int defaultCreditControlFailureHandling = 1;
 
   // Validity and TxTimer values (in seconds)
   protected long defaultValidityTime = 30;

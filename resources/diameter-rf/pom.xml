@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>org.mobicents.servers.jainslee.diameter</groupId>
 		<artifactId>restcomm-slee-diameter</artifactId>
-		<version>proids-2.8.1-SNAPSHOT</version>
+		<version>proids-2.8.1</version>
 		<relativePath>../..</relativePath>
 	</parent>
 

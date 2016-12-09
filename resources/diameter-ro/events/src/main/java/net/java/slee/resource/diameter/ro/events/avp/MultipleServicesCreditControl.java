@@ -46,7 +46,7 @@ import net.java.slee.resource.diameter.cca.events.avp.MultipleServicesCreditCont
  *     			[ Quota-Holding-Time ]		NOT IMPLEMENTED
  *     			[ Quota-Consumption-Time ]	NOT IMPLEMENTED
  *     			* [ Reporting-Reason ]		NOT IMPLEMENTED
- *     			[ Trigger ]					NOT IMPLEMENTED
+ *     			[ Trigger ]
  *     			[ PS-Furnish-Charging-Information ]	NOT IMPLEMENTED
  *     			[ Refund-Information ]		NOT IMPLEMENTED
  *     			* [ AF-Correlation-Information]	NOT IMPLEMENTED
@@ -81,11 +81,28 @@ public interface MultipleServicesCreditControl extends MultipleServicesCreditCon
 	ServiceSpecificInfo[] getServiceSpecificInfos();
 
 	/**
+	 * Returns the value of the Trigger AVP, of type Grouped.
+	 * Return value of null indicates that AVP has not been set. <br>
+	 * See: {@link Trigger}
+	 *
+	 * @return
+	 */
+	Trigger getTrigger();
+
+
+	/**
 	 * Returns true if the Unit-Quota-Threshold AVP is present in the message.
 	 *
 	 * @return
 	 */
 	boolean hasUnitQuotaThreshold();
+
+	/**
+	 * Returns true if the Trigger AVP is present in the message.
+	 *
+	 * @return
+	 */
+	boolean hasTrigger();
 
 	/**
 	 * Sets the value of the Unit-Quota-Threshold AVP, of type Unsigned32.
@@ -110,5 +127,12 @@ public interface MultipleServicesCreditControl extends MultipleServicesCreditCon
 	 * @param serviceSpecificInfos
 	 */
 	void setServiceSpecificInfos(ServiceSpecificInfo[] serviceSpecificInfos);
+
+	/**
+	 * Sets the value of the Trigger AVP, of type Grouped.
+	 *
+	 * @param trigger
+	 */
+	void setTrigger(Trigger trigger);
 
 }

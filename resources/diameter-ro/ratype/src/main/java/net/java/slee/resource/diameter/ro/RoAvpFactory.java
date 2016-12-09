@@ -48,12 +48,14 @@ import net.java.slee.resource.diameter.ro.events.avp.PocInformation;
 import net.java.slee.resource.diameter.ro.events.avp.PsFurnishChargingInformation;
 import net.java.slee.resource.diameter.ro.events.avp.PsInformation;
 import net.java.slee.resource.diameter.ro.events.avp.RecipientAddress;
+import net.java.slee.resource.diameter.ro.events.avp.RecipientInfo;
 import net.java.slee.resource.diameter.ro.events.avp.SdpMediaComponent;
 import net.java.slee.resource.diameter.ro.events.avp.ServiceInformation;
 import net.java.slee.resource.diameter.ro.events.avp.ServiceSpecificInfo;
 import net.java.slee.resource.diameter.ro.events.avp.SmsInformation;
 import net.java.slee.resource.diameter.ro.events.avp.TalkBurstExchange;
 import net.java.slee.resource.diameter.ro.events.avp.TimeStamps;
+import net.java.slee.resource.diameter.ro.events.avp.Trigger;
 import net.java.slee.resource.diameter.ro.events.avp.TrunkGroupId;
 import net.java.slee.resource.diameter.ro.events.avp.WlanInformation;
 import net.java.slee.resource.diameter.ro.events.avp.WlanRadioContainer;
@@ -254,6 +256,13 @@ public interface RoAvpFactory extends CreditControlAVPFactory {
   public RecipientAddress createRecipientAddress();
 
   /**
+   * Create an empty RecipientInfo (Grouped AVP) instance.
+   *
+   * @return
+   */
+  public RecipientInfo createRecipientInfo();
+
+  /**
    * Create an empty SdpMediaComponent (Grouped AVP) instance.
    * 
    * @return
@@ -294,6 +303,13 @@ public interface RoAvpFactory extends CreditControlAVPFactory {
    * @return
    */
   public TimeStamps createTimeStamps();
+
+  /**
+   * Create an empty Trigger (Grouped AVP) instance.
+   *
+   * @return
+   */
+  public Trigger createTrigger();
 
   /**
    * Create an empty TrunkGroupId (Grouped AVP) instance.

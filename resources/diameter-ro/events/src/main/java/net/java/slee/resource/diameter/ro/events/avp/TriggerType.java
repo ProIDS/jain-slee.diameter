@@ -22,16 +22,24 @@
 
 package net.java.slee.resource.diameter.ro.events.avp;
 
+import net.java.slee.resource.diameter.base.events.avp.Enumerated;
+
 import java.io.Serializable;
 import java.io.StreamCorruptedException;
 
-import net.java.slee.resource.diameter.base.events.avp.Enumerated;
-
 /**
- * Java class to represent the TriggerType enumerated type.
+ * Java class to represent the TriggerType enumerated type
+ * based on the Diameter Ro Reference Point Protocol Details (3GPP TS 32.299 V8.25.0) specification.
+ * <p>
+ *     When included in the Credit Control Answer command, the Trigger-Type AVP indicates the events that shall cause the credit control client to re-authorise the associated quota. The client shall not re-authorise the quota when events which are not included in the Trigger AVP occur.
+ * </p>
+ * <p>
+ *     When included in the Credit Control Request command indicates the specific event which caused the re-authorisation request of the Reporting-Reason with value RATING_CONDITION_CHANGE associated.
+ * </p>
  * 
  * @author <a href="mailto:brainslog@gmail.com"> Alexandre Mendonca </a>
  * @author <a href="mailto:baranowb@gmail.com"> Bartosz Baranowski </a>
+ * @author <a href="mailto:grzegorz.figiel@pro-ids.com"> Grzegorz Figiel (ProIDS sp. z o.o.)</a>
  */
 public class TriggerType implements Enumerated, Serializable {
 
@@ -54,8 +62,6 @@ public class TriggerType implements Enumerated, Serializable {
   public static final int _CHANGEINLOCATION_MNC = 31;
 
   public static final int _CHANGEINLOCATION_RAC = 32;
-
-  public static final int _CHANGEINPARTICIPANTS_Number = 50;
 
   public static final int _CHANGEINQOS_DELAY_CLASS = 12;
 
@@ -84,6 +90,18 @@ public class TriggerType implements Enumerated, Serializable {
   public static final int _CHANGEINQOS_TRAFFIC_HANDLING_PRIORITY = 21;
 
   public static final int _CHANGEINQOS_TRANSFER_DELAY = 20;
+
+  public static final int _CHANGE_IN_MEDIA_COMPOSITION = 40;
+
+  public static final int _CHANGEINPARTICIPANTS_Number = 50;
+
+  public static final int _CHANGE_IN_THRSHLD_OF_PARTICIPANTS_NMB = 51;
+
+  public static final int _CHANGE_IN_USER_PARTICIPATING_TYPE = 52;
+
+  public static final int _CHANGE_IN_SERVICE_CONDITION = 60;
+
+  public static final int _CHANGE_IN_SERVING_NODE = 61;
 
   /**
    * This value is used to indicate that a change in the end user location shall cause the credit control client to ask for a re- authorisation of the associated quota. This should not be used in conjunction with enumerated values 30 to 34.
@@ -131,7 +149,7 @@ public class TriggerType implements Enumerated, Serializable {
   public static final TriggerType CHANGEINLOCATION_RAC = new TriggerType(_CHANGEINLOCATION_RAC);
 
   /**
-   * This value is used specifically for PoC to indicate that a change in the number of active participants within a PoC session shall cause the credit control client to ask for a re-authorisation of the associated quota.
+   * This value is used specifically for multi participating session to indicate that a change in the number of active participants within a session shall cause the credit control client to ask for a re-authorisation of the associated quota.
    */
   public static final TriggerType CHANGEINPARTICIPANTS_Number = new TriggerType(_CHANGEINPARTICIPANTS_Number);
 
@@ -205,6 +223,35 @@ public class TriggerType implements Enumerated, Serializable {
    */
   public static final TriggerType CHANGEINQOS_TRANSFER_DELAY = new TriggerType(_CHANGEINQOS_TRANSFER_DELAY);
 
+  /**
+   * This value is used to indicate that a change in the media composition (as identified within SDP) for an existing SIP session shall cause the credit control client to ask for a re-authorisation of the associated quota.
+   */
+  public static final TriggerType CHANGE_IN_MEDIA_COMPOSITION = new TriggerType(_CHANGE_IN_MEDIA_COMPOSITION);
+
+  /**
+   * This value is used specifically to indicate that a change in the threshold of participants number within a session shall cause the credit control client to ask for a re-authorisation of the associated quota.
+   * NOTE 3.
+   * The threshold and the granularity of threshold are operator configurable. This should not be used in conjunction with value 50.
+   */
+  public static final TriggerType CHANGE_IN_THRSHLD_OF_PARTICIPANTS_NMB = new TriggerType(_CHANGE_IN_THRSHLD_OF_PARTICIPANTS_NMB);
+
+  /**
+   * This value is used specifically to indicate that a change in the user participating type within a session shall cause the credit control client to ask for a re-authorisation of the associated quota.
+   */
+  public static final TriggerType CHANGE_IN_USER_PARTICIPATING_TYPE = new TriggerType(_CHANGE_IN_USER_PARTICIPATING_TYPE);
+
+  /**
+   * This value is used to indicate that a change in rating conditions associated with a service occurs.
+   * The description of the conditions causing a change are service specific and may be documented in middle-tier specifications or may be configurable.
+   */
+  public static final TriggerType CHANGE_IN_SERVICE_CONDITION = new TriggerType(_CHANGE_IN_SERVICE_CONDITION);
+
+  /**
+   * This value is used to indicate that a change in serving node shall cause the credit control client to ask for a re-authorisation of the associated quota.
+   */
+  public static final TriggerType CHANGE_IN_SERVING_NODE = new TriggerType(_CHANGE_IN_SERVING_NODE);
+
+
   private TriggerType(int v) {
     value = v;
   }
@@ -261,7 +308,18 @@ public class TriggerType implements Enumerated, Serializable {
     case _CHANGEINQOS_TRAFFIC_HANDLING_PRIORITY: return CHANGEINQOS_TRAFFIC_HANDLING_PRIORITY;
 
     case _CHANGEINQOS_TRANSFER_DELAY: return CHANGEINQOS_TRANSFER_DELAY;
-    default: throw new IllegalArgumentException("Invalid TriggerType value: " + type);
+
+    case _CHANGE_IN_MEDIA_COMPOSITION: return CHANGE_IN_MEDIA_COMPOSITION;
+
+    case _CHANGE_IN_THRSHLD_OF_PARTICIPANTS_NMB: return CHANGE_IN_THRSHLD_OF_PARTICIPANTS_NMB;
+
+    case _CHANGE_IN_USER_PARTICIPATING_TYPE: return CHANGE_IN_USER_PARTICIPATING_TYPE;
+
+    case _CHANGE_IN_SERVICE_CONDITION: return CHANGE_IN_SERVICE_CONDITION;
+
+    case _CHANGE_IN_SERVING_NODE: return CHANGE_IN_SERVING_NODE;
+
+      default: throw new IllegalArgumentException("Invalid TriggerType value: " + type);
     }
   }
 
@@ -289,6 +347,7 @@ public class TriggerType implements Enumerated, Serializable {
 
     case _CHANGEINLOCATION_RAC: return "CHANGEINLOCATION_RAC";
 
+    //representation unchanged due to backward compatibility
     case _CHANGEINPARTICIPANTS_Number: return "CHANGEINPARTICIPANTS_Number";
 
     case _CHANGEINQOS_DELAY_CLASS: return "CHANGEINQOS_DELAY_CLASS";
@@ -318,7 +377,18 @@ public class TriggerType implements Enumerated, Serializable {
     case _CHANGEINQOS_TRAFFIC_HANDLING_PRIORITY: return "CHANGEINQOS_TRAFFIC_HANDLING_PRIORITY";
 
     case _CHANGEINQOS_TRANSFER_DELAY: return "CHANGEINQOS_TRANSFER_DELAY";
-    default: return "<Invalid Value>";
+
+      case _CHANGE_IN_MEDIA_COMPOSITION: return "CHANGE_IN_MEDIA_COMPOSITION";
+
+      case _CHANGE_IN_THRSHLD_OF_PARTICIPANTS_NMB: return "CHANGE_IN_THRSHLD_OF_PARTICIPANTS_NMB";
+
+      case _CHANGE_IN_USER_PARTICIPATING_TYPE: return "CHANGE_IN_USER_PARTICIPATING_TYPE";
+
+      case _CHANGE_IN_SERVICE_CONDITION: return "CHANGE_IN_SERVICE_CONDITION";
+
+      case _CHANGE_IN_SERVING_NODE: return "CHANGE_IN_SERVING_NODE";
+
+      default: return "<Invalid Value>";
     }
   }
 

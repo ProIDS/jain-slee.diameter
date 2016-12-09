@@ -373,6 +373,8 @@ public class DiameterRoAvpCodes
   public static final DiameterAvpType TMGI_AVP_TYPE = DiameterAvpType.fromString("OctetString");
   public static final int TOKEN_TEXT = 1215;
   public static final DiameterAvpType TOKEN_TEXT_AVP_TYPE = DiameterAvpType.fromString("UTF8String");
+  public static final int TRIGGER = 1264;
+  public static final DiameterAvpType TRIGGER_AVP_TYPE = DiameterAvpType.fromString("Grouped");
   public static final int TRIGGER_TYPE = 870;
   public static final DiameterAvpType TRIGGER_TYPE_AVP_TYPE = DiameterAvpType.fromString("Enumerated");
   public static final int TRUNK_GROUP_ID = 851;

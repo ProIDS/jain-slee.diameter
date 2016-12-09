@@ -59,6 +59,7 @@ import net.java.slee.resource.diameter.ro.events.avp.ServiceSpecificInfo;
 import net.java.slee.resource.diameter.ro.events.avp.SmsInformation;
 import net.java.slee.resource.diameter.ro.events.avp.TalkBurstExchange;
 import net.java.slee.resource.diameter.ro.events.avp.TimeStamps;
+import net.java.slee.resource.diameter.ro.events.avp.Trigger;
 import net.java.slee.resource.diameter.ro.events.avp.TrunkGroupId;
 import net.java.slee.resource.diameter.ro.events.avp.WlanInformation;
 import net.java.slee.resource.diameter.ro.events.avp.WlanRadioContainer;
@@ -93,6 +94,7 @@ import org.mobicents.slee.resource.diameter.ro.events.avp.ServiceSpecificInfoImp
 import org.mobicents.slee.resource.diameter.ro.events.avp.SmsInformationImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.TalkBurstExchangeImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.TimeStampsImpl;
+import org.mobicents.slee.resource.diameter.ro.events.avp.TriggerImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.TrunkGroupIdImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.WlanInformationImpl;
 import org.mobicents.slee.resource.diameter.ro.events.avp.WlanRadioContainerImpl;
@@ -258,6 +260,10 @@ public class RoAvpFactoryImpl extends CreditControlAVPFactoryImpl implements RoA
 
   public TimeStamps createTimeStamps() {
     return (TimeStamps) AvpUtilities.createAvp(DiameterRoAvpCodes.TIME_STAMPS, DiameterRoAvpCodes.TGPP_VENDOR_ID, null, TimeStampsImpl.class);
+  }
+
+  public Trigger createTrigger() {
+    return (Trigger) AvpUtilities.createAvp(DiameterRoAvpCodes.TRIGGER, DiameterRoAvpCodes.TGPP_VENDOR_ID, null, TriggerImpl.class);
   }
 
   public TrunkGroupId createTrunkGroupId() {

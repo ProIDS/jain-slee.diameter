@@ -21,6 +21,7 @@ package org.mobicents.slee.resource.diameter.ro.events.avp;
 
 import net.java.slee.resource.diameter.ro.events.avp.MultipleServicesCreditControl;
 import net.java.slee.resource.diameter.ro.events.avp.ServiceSpecificInfo;
+import net.java.slee.resource.diameter.ro.events.avp.Trigger;
 import org.mobicents.slee.resource.diameter.cca.events.avp.MultipleServicesCreditControlAvpImpl;
 
 /**
@@ -67,6 +68,17 @@ public class MultipleServicesCreditControlImpl extends MultipleServicesCreditCon
 	}
 
 	/**
+	 * Returns the value of the Trigger AVP, of type Grouped.
+	 * Return value of null indicates that AVP has not been set. <br>
+	 * See: {@link Trigger}
+	 *
+	 * @return
+	 */
+	public Trigger getTrigger() {
+		return (Trigger) getAvpAsCustom(DiameterRoAvpCodes.TRIGGER, TriggerImpl.class);
+	}
+
+	/**
 	 * (non-Javadoc)
 	 *
 	 * @see
@@ -74,6 +86,15 @@ public class MultipleServicesCreditControlImpl extends MultipleServicesCreditCon
 	 */
 	public boolean hasUnitQuotaThreshold() {
 		return hasAvp(DiameterRoAvpCodes.UNIT_QUOTA_THRESHOLD);
+	}
+
+	/**
+	 * Returns true if the Trigger AVP is present in the message.
+	 *
+	 * @return
+	 */
+	public boolean hasTrigger() {
+		return hasAvp(DiameterRoAvpCodes.TRIGGER);
 	}
 
 	/**
@@ -104,6 +125,15 @@ public class MultipleServicesCreditControlImpl extends MultipleServicesCreditCon
 		for(ServiceSpecificInfo serviceSpecificInfo : serviceSpecificInfos) {
 			setServiceSpecificInfo(serviceSpecificInfo);
 		}
+	}
+
+	/**
+	 * Sets the value of the Trigger AVP, of type Grouped.
+	 *
+	 * @param trigger
+	 */
+	public void setTrigger(Trigger trigger) {
+		addAvp(DiameterRoAvpCodes.TRIGGER, DiameterRoAvpCodes.TGPP_VENDOR_ID, trigger.byteArrayValue());
 	}
 
 }

@@ -23,9 +23,12 @@
 package net.java.slee.resource.diameter.ro.events.avp;
 
 import net.java.slee.resource.diameter.base.events.avp.Enumerated;
+import org.apache.log4j.Logger;
 
+import java.io.InputStream;
 import java.io.Serializable;
 import java.io.StreamCorruptedException;
+import java.util.Properties;
 
 /**
  * Java class to represent the TriggerType enumerated type
@@ -44,6 +47,8 @@ import java.io.StreamCorruptedException;
 public class TriggerType implements Enumerated, Serializable {
 
   private static final long serialVersionUID = 1L;
+
+  private static Logger LOG = Logger.getLogger(TriggerType.class);
 
   public static final int _CHANGE_IN_LOCATION = 3;
 
@@ -102,6 +107,33 @@ public class TriggerType implements Enumerated, Serializable {
   public static final int _CHANGE_IN_SERVICE_CONDITION = 60;
 
   public static final int _CHANGE_IN_SERVING_NODE = 61;
+
+  private static final String TMPL_SPECIFIC_VALUE_CONFIG_PATH = "/tmpl/trigger-type.avp";
+  private static final String TMPL_SERVED_IN_DEGRADED_MODE_PROPERTY = "served.in.degraded.mode";
+  private static final String TMPL_SERVED_IN_DEGRADED_MODE_DEFAULT_VALUE = "999";
+  public static final int _TMPL_SERVED_IN_DEGRADED_MODE = getTmplServeInDegradedModeValue();
+
+  /* TMPL specific code */
+  private static int getTmplServeInDegradedModeValue() {
+    int value;
+    Properties avpConfig = new Properties();
+    try {
+      InputStream inputStream = TriggerType.class.getResourceAsStream(TMPL_SPECIFIC_VALUE_CONFIG_PATH);
+      try {
+        avpConfig.load(inputStream);
+      } finally {
+        inputStream.close();
+      }
+
+      value = Integer.parseInt( avpConfig.getProperty(TMPL_SERVED_IN_DEGRADED_MODE_PROPERTY, TMPL_SERVED_IN_DEGRADED_MODE_DEFAULT_VALUE) );
+    } catch(Throwable t) {
+      LOG.warn("Cannot load TMPL SERVED_IN_DEGRADED_MODE Trigger-Type AVP value from file: " + TMPL_SPECIFIC_VALUE_CONFIG_PATH
+              + " Cause: " +  t.toString()
+              + " Using default value: " + TMPL_SERVED_IN_DEGRADED_MODE_DEFAULT_VALUE);
+      value = Integer.parseInt(TMPL_SERVED_IN_DEGRADED_MODE_DEFAULT_VALUE);
+    }
+    return value;
+  }
 
   /**
    * This value is used to indicate that a change in the end user location shall cause the credit control client to ask for a re- authorisation of the associated quota. This should not be used in conjunction with enumerated values 30 to 34.
@@ -251,6 +283,13 @@ public class TriggerType implements Enumerated, Serializable {
    */
   public static final TriggerType CHANGE_IN_SERVING_NODE = new TriggerType(_CHANGE_IN_SERVING_NODE);
 
+  /**
+   * T-Mobile OCP specific value.
+   * <p>
+   * This value is used to indicate that special treatment should be applied for next CCR sent.
+   * </p>
+   */
+  public static final TriggerType TMPL_SERVED_IN_DEGRADED_MODE = new TriggerType(_TMPL_SERVED_IN_DEGRADED_MODE);
 
   private TriggerType(int v) {
     value = v;
@@ -319,7 +358,13 @@ public class TriggerType implements Enumerated, Serializable {
 
     case _CHANGE_IN_SERVING_NODE: return CHANGE_IN_SERVING_NODE;
 
-      default: throw new IllegalArgumentException("Invalid TriggerType value: " + type);
+      default: {
+        if(type != _TMPL_SERVED_IN_DEGRADED_MODE) {
+          throw new IllegalArgumentException("Invalid TriggerType value: " + type);
+        } else {
+          return TMPL_SERVED_IN_DEGRADED_MODE;
+        }
+      }
     }
   }
 
@@ -388,7 +433,13 @@ public class TriggerType implements Enumerated, Serializable {
 
       case _CHANGE_IN_SERVING_NODE: return "CHANGE_IN_SERVING_NODE";
 
-      default: return "<Invalid Value>";
+      default: {
+        if(value != _TMPL_SERVED_IN_DEGRADED_MODE) {
+          return "<Invalid Value>";
+        } else {
+          return "TMPL_SERVED_IN_DEGRADED_MODE";
+        }
+      }
     }
   }
 

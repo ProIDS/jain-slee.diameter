@@ -32,9 +32,9 @@ import net.java.slee.resource.diameter.ro.events.avp.NodeFunctionality;
 import net.java.slee.resource.diameter.ro.events.avp.RoleOfNode;
 import net.java.slee.resource.diameter.ro.events.avp.SdpMediaComponent;
 import net.java.slee.resource.diameter.ro.events.avp.ServerCapabilities;
+import net.java.slee.resource.diameter.ro.events.avp.ServiceSpecificInfo;
 import net.java.slee.resource.diameter.ro.events.avp.TimeStamps;
 import net.java.slee.resource.diameter.ro.events.avp.TrunkGroupId;
-
 import org.mobicents.slee.resource.diameter.base.events.avp.GroupedAvpImpl;
 
 /**
@@ -44,6 +44,7 @@ import org.mobicents.slee.resource.diameter.base.events.avp.GroupedAvpImpl;
  * <br>11:34:57 AM Apr 11, 2009 
  * <br>
  * @author <a href="mailto:brainslog@gmail.com"> Alexandre Mendonca </a>
+ * @author <a href="mailto:jacek.stromecki@pro-ids.com"> Jacek Stromecki </a>
  */ 
 public class ImsInformationImpl extends GroupedAvpImpl implements ImsInformation {
 
@@ -77,6 +78,13 @@ public class ImsInformationImpl extends GroupedAvpImpl implements ImsInformation
     return getAvpAsOctetString(DiameterRoAvpCodes.BEARER_SERVICE, DiameterRoAvpCodes.TGPP_VENDOR_ID);
   }
 
+  /* (non-Javadoc)
+   * @see net.java.slee.resource.diameter.ro.events.avp.ImsInformation#getAlternateChargedPartyAddress()
+   */
+  public String getAlternateChargedPartyAddress() {
+    return getAvpAsUTF8String(DiameterRoAvpCodes.ALTERNATE_CHARGED_PARTY_ADDRESS, DiameterRoAvpCodes.TGPP_VENDOR_ID);
+  }
+  
   /* (non-Javadoc)
    * @see net.java.slee.resource.diameter.ro.events.avp.ImsInformation#getCalledPartyAddress()
    */
@@ -175,6 +183,15 @@ public class ImsInformationImpl extends GroupedAvpImpl implements ImsInformation
     return getAvpAsUTF8String(DiameterRoAvpCodes.SERVICE_ID, DiameterRoAvpCodes.TGPP_VENDOR_ID);
   }
 
+  /*
+   * (non-Javadoc)
+   *
+   * @see net.java.slee.resource.diameter.cca.events.avp.MultipleServicesCreditControl#getServiceSpecificInfos()
+   */
+  public ServiceSpecificInfo[] getServiceSpecificInfos() {
+    return (ServiceSpecificInfo[]) getAvpsAsCustom(DiameterRoAvpCodes.SERVICE_SPECIFIC_INFO, ServiceSpecificInfoImpl.class);
+  }
+
   /* (non-Javadoc)
    * @see net.java.slee.resource.diameter.ro.events.avp.ImsInformation#getServiceSpecificData()
    */
@@ -210,6 +227,13 @@ public class ImsInformationImpl extends GroupedAvpImpl implements ImsInformation
     return hasAvp( DiameterRoAvpCodes.BEARER_SERVICE, DiameterRoAvpCodes.TGPP_VENDOR_ID );
   }
 
+  /* (non-Javadoc)
+   * @see net.java.slee.resource.diameter.ro.events.avp.ImsInformation#hasAlternateChargedPartyAddress()
+   */
+  public boolean hasAlternateChargedPartyAddress() {
+    return hasAvp( DiameterRoAvpCodes.ALTERNATE_CHARGED_PARTY_ADDRESS, DiameterRoAvpCodes.TGPP_VENDOR_ID );
+  }
+  
   /* (non-Javadoc)
    * @see net.java.slee.resource.diameter.ro.events.avp.ImsInformation#hasCalledPartyAddress()
    */
@@ -329,6 +353,13 @@ public class ImsInformationImpl extends GroupedAvpImpl implements ImsInformation
    */
   public void setBearerService( byte[] bearerService ) {
     addAvp(DiameterRoAvpCodes.BEARER_SERVICE, DiameterRoAvpCodes.TGPP_VENDOR_ID, bearerService);
+  }
+  
+  /* (non-Javadoc)
+   * @see net.java.slee.resource.diameter.ro.events.avp.ImsInformation#setAlternateChargedPartyAddress(String)
+   */
+  public void setAlternateChargedPartyAddress( String alternateChargedPartyAddress ) {
+    addAvp(DiameterRoAvpCodes.ALTERNATE_CHARGED_PARTY_ADDRESS, DiameterRoAvpCodes.TGPP_VENDOR_ID, alternateChargedPartyAddress);
   }
 
   /* (non-Javadoc)
@@ -464,6 +495,26 @@ public class ImsInformationImpl extends GroupedAvpImpl implements ImsInformation
    */
   public void setServiceId( String serviceId ) {
     addAvp(DiameterRoAvpCodes.SERVICE_ID, DiameterRoAvpCodes.TGPP_VENDOR_ID, serviceId);
+  }
+
+  /*
+   * (non-Javadoc)
+   *
+   * @see net.java.slee.resource.diameter.cca.events.avp.MultipleServicesCreditControlAvp#setServiceSpecificInfo(net.java.slee.resource.diameter.cca.events.avp.ServiceSpecificInfo)
+   */
+  public void setServiceSpecificInfo(ServiceSpecificInfo serviceSpecificInfo) {
+    addAvp(DiameterRoAvpCodes.SERVICE_SPECIFIC_INFO, serviceSpecificInfo.byteArrayValue());
+  }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see net.java.slee.resource.diameter.cca.events.avp.MultipleServicesCreditControlAvp#setServiceSpecificInfos(net.java.slee.resource.diameter.cca.events.avp.ServiceSpecificInfo[])
+     */
+  public void setServiceSpecificInfos(ServiceSpecificInfo[] serviceSpecificInfos) {
+    for(ServiceSpecificInfo serviceSpecificInfo : serviceSpecificInfos) {
+      setServiceSpecificInfo(serviceSpecificInfo);
+    }
   }
 
   /* (non-Javadoc)

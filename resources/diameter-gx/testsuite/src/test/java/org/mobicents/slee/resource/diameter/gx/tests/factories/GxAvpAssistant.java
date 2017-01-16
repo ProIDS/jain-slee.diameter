@@ -91,8 +91,8 @@ public class GxAvpAssistant extends org.mobicents.slee.resource.diameter.base.te
 				new org.mobicents.slee.resource.diameter.gx.events.avp.ChargingInformationImpl[] { new org.mobicents.slee.resource.diameter.gx.events.avp.ChargingInformationImpl(
 						DiameterGxAvpCodes.CHARGING_INFORMATION, DiameterGxAvpCodes.TGPP_VENDOR_ID, 0, 1, dummyAvpBytes) });
 
-		typeValues.put(DiameterAvp.class, new DiameterAvpImpl(0, 0, 0, 1, dummyAvpBytes, null));
-		typeValues.put(DiameterAvp[].class, new DiameterAvpImpl[] { new DiameterAvpImpl(0, 0, 0, 1, dummyAvpBytes, null) });
+		typeValues.put(DiameterAvp.class, new DiameterAvpImpl(0, 0, null, 0, 1, dummyAvpBytes, null));
+		typeValues.put(DiameterAvp[].class, new DiameterAvpImpl[] { new DiameterAvpImpl(0, 0, null, 0, 1, dummyAvpBytes, null) });
 
 	}
 

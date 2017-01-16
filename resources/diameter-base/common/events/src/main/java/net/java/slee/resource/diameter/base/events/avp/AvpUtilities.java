@@ -623,10 +623,22 @@ public class AvpUtilities {
    * @param isProtected the value for the protected bit
    * @param value the value of the AVP to add
    */
-  public static void setAvpAsUnsigned32(Object parent, int avpCode, long vendorId, AvpSet set, boolean isMandatory, boolean isProtected, long value) { 
+  public static void setAvpAsUnsigned32(Object parent, int avpCode, long vendorId, AvpSet set, boolean isMandatory, boolean isProtected, long value) {
     performPreAddOperations(parent, avpCode, vendorId, set);
 
-    set.addAvp(avpCode, value, vendorId, isMandatory, isProtected, true);
+    if(Avp.CC_REQUEST_NUMBER == avpCode && set.getAvp(avpCode) != null){
+      logger.debug("Updating CC-Request-Number AVP with value " + value + ".");
+      int position = set.getAvpIndex(avpCode);
+      set.removeAvpByIndex(position);
+      set.insertAvp(position, avpCode, value, vendorId, isMandatory, isProtected, true);
+    } else if (Avp.AUTH_APPLICATION_ID == avpCode && set.getAvp(avpCode) != null) {
+      logger.debug("Updating Auth-Application-Id AVP with value " + value + ".");
+      int position = set.getAvpIndex(avpCode);
+      set.removeAvpByIndex(position);
+      set.insertAvp(position, avpCode, value, vendorId, isMandatory, isProtected, true);
+    }  else {
+      set.addAvp(avpCode, value, vendorId, isMandatory, isProtected, true);
+    }
   }
 
   public static long getAvpAsUnsigned64(int avpCode, AvpSet set) {

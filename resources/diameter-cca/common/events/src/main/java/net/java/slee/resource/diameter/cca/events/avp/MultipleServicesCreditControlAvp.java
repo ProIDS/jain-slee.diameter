@@ -99,6 +99,7 @@ import net.java.slee.resource.diameter.base.events.avp.GroupedAvp;
  *      
  * @author <a href="mailto:baranowb@gmail.com"> Bartosz Baranowski </a>
  * @author <a href="mailto:brainslog@gmail.com"> Alexandre Mendonca </a>
+ * @author <a href="mailto:jacek.stromecki@proi-ids.com"> Jacek Stromecki </a>
  */
 public interface MultipleServicesCreditControlAvp extends GroupedAvp {
 
@@ -188,7 +189,7 @@ public interface MultipleServicesCreditControlAvp extends GroupedAvp {
    * @return
    */
   long getValidityTime();
-
+  
   /**
    * Returns the value of the Validity-Time AVP, of type Unsigned32.
    * 
@@ -232,7 +233,6 @@ public interface MultipleServicesCreditControlAvp extends GroupedAvp {
    * @return
    */
   boolean hasValidityTime();
-
 
   /**
    * Sets the value of the Final-Unit-Indication AVP, of type Grouped. <br>

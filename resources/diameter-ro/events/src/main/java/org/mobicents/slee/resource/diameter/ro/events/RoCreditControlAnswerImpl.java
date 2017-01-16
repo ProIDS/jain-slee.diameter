@@ -22,14 +22,16 @@
 
 package org.mobicents.slee.resource.diameter.ro.events;
 
-import org.jdiameter.api.Message;
-import org.mobicents.slee.resource.diameter.cca.events.avp.CostInformationAvpImpl;
-
 import net.java.slee.resource.diameter.cca.events.avp.CcSessionFailoverType;
 import net.java.slee.resource.diameter.cca.events.avp.CostInformationAvp;
 import net.java.slee.resource.diameter.cca.events.avp.CreditControlAVPCodes;
 import net.java.slee.resource.diameter.cca.events.avp.CreditControlFailureHandlingType;
 import net.java.slee.resource.diameter.ro.events.RoCreditControlAnswer;
+import net.java.slee.resource.diameter.ro.events.avp.RemainingBalance;
+import org.jdiameter.api.Message;
+import org.mobicents.slee.resource.diameter.cca.events.avp.CostInformationAvpImpl;
+import org.mobicents.slee.resource.diameter.ro.events.avp.DiameterRoAvpCodes;
+import org.mobicents.slee.resource.diameter.ro.events.avp.RemainingBalanceImpl;
 
 /**
  * 
@@ -97,6 +99,34 @@ public class RoCreditControlAnswerImpl extends RoCreditControlMessageImpl implem
   @Override
   public boolean hasCostInformation() {
     return hasAvp(CreditControlAVPCodes.Cost_Information);
+  }
+
+  /**
+   * Returns the value of the Remaining-Balance AVP, of type Grouped.
+   *
+   * @return
+   */
+  public RemainingBalance getRemainingBalance() {
+    return (RemainingBalance) getAvpAsCustom(DiameterRoAvpCodes.REMAINING_BALANCE, DiameterRoAvpCodes.TGPP_VENDOR_ID, RemainingBalanceImpl.class);
+  }
+
+  /**
+   * Sets the value of the Remaining-Balance AVP, of type Grouped.
+   *
+   * @param remainingBalance
+   * @throws IllegalStateException
+   */
+  public void setRemainingBalance(RemainingBalance remainingBalance) throws IllegalStateException {
+    addAvp(DiameterRoAvpCodes.REMAINING_BALANCE, DiameterRoAvpCodes.TGPP_VENDOR_ID, remainingBalance.byteArrayValue());
+  }
+
+  /**
+   * Returns true if the Remaining-Balance AVP is present in the message.
+   *
+   * @return
+   */
+  public boolean hasRemainingBalance() {
+    return hasAvp(DiameterRoAvpCodes.REMAINING_BALANCE, DiameterRoAvpCodes.TGPP_VENDOR_ID);
   }
 
   /*

@@ -41,16 +41,21 @@ import net.java.slee.resource.diameter.ro.events.avp.MessageBody;
 import net.java.slee.resource.diameter.ro.events.avp.MessageClass;
 import net.java.slee.resource.diameter.ro.events.avp.MmContentType;
 import net.java.slee.resource.diameter.ro.events.avp.MmsInformation;
+import net.java.slee.resource.diameter.ro.events.avp.MultipleServicesCreditControl;
 import net.java.slee.resource.diameter.ro.events.avp.NodeFunctionality;
 import net.java.slee.resource.diameter.ro.events.avp.OriginatorAddress;
 import net.java.slee.resource.diameter.ro.events.avp.PocInformation;
 import net.java.slee.resource.diameter.ro.events.avp.PsFurnishChargingInformation;
 import net.java.slee.resource.diameter.ro.events.avp.PsInformation;
 import net.java.slee.resource.diameter.ro.events.avp.RecipientAddress;
+import net.java.slee.resource.diameter.ro.events.avp.RecipientInfo;
 import net.java.slee.resource.diameter.ro.events.avp.SdpMediaComponent;
 import net.java.slee.resource.diameter.ro.events.avp.ServiceInformation;
+import net.java.slee.resource.diameter.ro.events.avp.ServiceSpecificInfo;
+import net.java.slee.resource.diameter.ro.events.avp.SmsInformation;
 import net.java.slee.resource.diameter.ro.events.avp.TalkBurstExchange;
 import net.java.slee.resource.diameter.ro.events.avp.TimeStamps;
+import net.java.slee.resource.diameter.ro.events.avp.Trigger;
 import net.java.slee.resource.diameter.ro.events.avp.TrunkGroupId;
 import net.java.slee.resource.diameter.ro.events.avp.WlanInformation;
 import net.java.slee.resource.diameter.ro.events.avp.WlanRadioContainer;
@@ -61,6 +66,7 @@ import net.java.slee.resource.diameter.ro.events.avp.WlanRadioContainer;
  * 
  * @author <a href="mailto:brainslog@gmail.com"> Alexandre Mendonca </a>
  * @author <a href="mailto:baranowb@gmail.com"> Bartosz Baranowski </a>
+ * @author <a href="mailto:grzegorz.figiel@pro-ids.com"> Grzegorz Figiel (ProIDS sp. z o.o.)</a>
  */
 public interface RoAvpFactory extends CreditControlAVPFactory {
 
@@ -198,6 +204,13 @@ public interface RoAvpFactory extends CreditControlAVPFactory {
   public MmsInformation createMmsInformation();
 
   /**
+   * Create an empty MultipleServicesCreditControl (Grouped AVP) Ro interface instance.
+   *
+   * @return
+   */
+  public MultipleServicesCreditControl createMultipleServicesCreditControl();
+
+  /**
    * Create an empty OriginatorAddress (Grouped AVP) instance.
    * 
    * @return
@@ -243,6 +256,13 @@ public interface RoAvpFactory extends CreditControlAVPFactory {
   public RecipientAddress createRecipientAddress();
 
   /**
+   * Create an empty RecipientInfo (Grouped AVP) instance.
+   *
+   * @return
+   */
+  public RecipientInfo createRecipientInfo();
+
+  /**
    * Create an empty SdpMediaComponent (Grouped AVP) instance.
    * 
    * @return
@@ -255,6 +275,20 @@ public interface RoAvpFactory extends CreditControlAVPFactory {
    * @return
    */
   public ServiceInformation createServiceInformation();
+
+    /**
+     * Create an empty ServiceSpecificInfo (Grouped AVP) instance.
+     *
+     * @return
+     */
+    public ServiceSpecificInfo createServiceSpecificInfo();
+
+    /**
+   * Create an empty SmsInformation (Grouped AVP) instance.
+   *
+   * @return
+   */
+  public SmsInformation createSmsInformation();
 
   /**
    * Create an empty TalkBurstExchange (Grouped AVP) instance.
@@ -269,6 +303,13 @@ public interface RoAvpFactory extends CreditControlAVPFactory {
    * @return
    */
   public TimeStamps createTimeStamps();
+
+  /**
+   * Create an empty Trigger (Grouped AVP) instance.
+   *
+   * @return
+   */
+  public Trigger createTrigger();
 
   /**
    * Create an empty TrunkGroupId (Grouped AVP) instance.

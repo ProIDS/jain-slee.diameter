@@ -22,8 +22,6 @@
 
 package org.mobicents.slee.resource.diameter.ro;
 
-import java.io.IOException;
-
 import net.java.slee.resource.diameter.base.DiameterException;
 import net.java.slee.resource.diameter.base.events.ReAuthAnswer;
 import net.java.slee.resource.diameter.base.events.avp.AvpNotAllowedException;
@@ -34,7 +32,6 @@ import net.java.slee.resource.diameter.ro.RoClientSessionActivity;
 import net.java.slee.resource.diameter.ro.RoMessageFactory;
 import net.java.slee.resource.diameter.ro.RoSessionState;
 import net.java.slee.resource.diameter.ro.events.RoCreditControlRequest;
-
 import org.jdiameter.api.Answer;
 import org.jdiameter.api.EventListener;
 import org.jdiameter.api.Request;
@@ -47,10 +44,13 @@ import org.jdiameter.common.impl.app.auth.ReAuthAnswerImpl;
 import org.jdiameter.common.impl.app.ro.RoCreditControlRequestImpl;
 import org.mobicents.slee.resource.diameter.base.events.DiameterMessageImpl;
 
+import java.io.IOException;
+
 /**
  * Implementation of {@link RoClientSessionActivity}.
  * 
  * @author <a href="mailto:brainslog@gmail.com"> Alexandre Mendonca </a>
+ * @author <a href="mailto:grzegorz.figiel@pro-ids.com"> Grzegorz Figiel [ProIDS] </a>*
  */
 public class RoClientSessionActivityImpl extends RoSessionActivityImpl implements RoClientSessionActivity, StateChangeListener<AppSession> {
 
@@ -58,14 +58,15 @@ public class RoClientSessionActivityImpl extends RoSessionActivityImpl implement
 
   protected transient ClientRoSession session;
 
+  protected long requestNumber;
+
   /**
    * 
-   * @param messageFactory
-   * @param avpFactory
+   * @param roMessageFactory
+   * @param roAvpFactory
    * @param session
    * @param destinationHost
    * @param destinationRealm
-   * @param endpoint
    * @param stack
    */
   public RoClientSessionActivityImpl(RoMessageFactory roMessageFactory, RoAvpFactory roAvpFactory, ClientRoSession session, DiameterIdentity destinationHost,
@@ -73,6 +74,7 @@ public class RoClientSessionActivityImpl extends RoSessionActivityImpl implement
     super(roMessageFactory, roAvpFactory, null, (EventListener<Request, Answer>) session, destinationRealm, destinationRealm);
 
     setSession(session);
+    setRequestNumber(0L);
     super.setCurrentWorkingSession(session.getSessions().get(0));
   }
 
@@ -85,7 +87,7 @@ public class RoClientSessionActivityImpl extends RoSessionActivityImpl implement
     RoCreditControlRequest request = super.getRoMessageFactory().createRoCreditControlRequest(super.getSessionId()/*,type*/);
     request.setCcRequestType(type);
 
-    // If there's a Destination-Host, add the AVP
+      // If there's a Destination-Host, add the AVP
     if (destinationHost != null) {
       request.setDestinationHost(destinationHost);
     }
@@ -103,9 +105,10 @@ public class RoClientSessionActivityImpl extends RoSessionActivityImpl implement
    */
   public void sendEventRoCreditControlRequest(RoCreditControlRequest ccr) throws IOException {
     // fetchCurrentState(ccr);
+      ccr.setCcRequestNumber(getRequestNumber());
+      validateState(ccr);
 
     DiameterMessageImpl msg = (DiameterMessageImpl) ccr;
-    validateState(ccr);
     try {
       session.sendCreditControlRequest(new RoCreditControlRequestImpl((Request) msg.getGenericData()));
     }
@@ -118,6 +121,7 @@ public class RoClientSessionActivityImpl extends RoSessionActivityImpl implement
       }
       throw new IOException("Failed to send message, due to: " + e);
     }
+      incrementRequestNumber();
   }
 
   /*
@@ -125,9 +129,11 @@ public class RoClientSessionActivityImpl extends RoSessionActivityImpl implement
    * @see net.java.slee.resource.diameter.ro.RoClientSessionActivity#sendInitialRoCreditControlRequest(net.java.slee.resource.diameter.ro.events.RoCreditControlRequest)
    */
   public void sendInitialRoCreditControlRequest(RoCreditControlRequest ccr) throws IOException {
-    // FIXME: should this affect FSM ?
+      // FIXME: should this affect FSM ?
 
-    validateState(ccr);
+      setRequestNumber(0L);
+      ccr.setCcRequestNumber(getRequestNumber());
+      validateState(ccr);
 
     DiameterMessageImpl msg = (DiameterMessageImpl) ccr;
 
@@ -140,6 +146,7 @@ public class RoClientSessionActivityImpl extends RoSessionActivityImpl implement
     catch (Exception e) {
       throw new IOException("Failed to send message, due to: " + e);
     }
+      incrementRequestNumber();
   }
 
   /*
@@ -147,7 +154,9 @@ public class RoClientSessionActivityImpl extends RoSessionActivityImpl implement
    * @see net.java.slee.resource.diameter.ro.RoClientSessionActivity#sendUpdateRoCreditControlRequest(net.java.slee.resource.diameter.ro.events.RoCreditControlRequest)
    */
   public void sendUpdateRoCreditControlRequest(RoCreditControlRequest ccr) throws IOException {
-    validateState(ccr);
+
+      ccr.setCcRequestNumber(getRequestNumber());
+      validateState(ccr);
 
     DiameterMessageImpl msg = (DiameterMessageImpl) ccr;
 
@@ -160,6 +169,7 @@ public class RoClientSessionActivityImpl extends RoSessionActivityImpl implement
     catch (Exception e) {
       throw new IOException("Failed to send message, due to: " + e);
     }
+      incrementRequestNumber();
   }
 
   /*
@@ -169,7 +179,8 @@ public class RoClientSessionActivityImpl extends RoSessionActivityImpl implement
   public void sendTerminationRoCreditControlRequest(RoCreditControlRequest ccr) throws IOException {
     // This should not be used to terminate sub-sessions!
 
-    validateState(ccr);
+      ccr.setCcRequestNumber(getRequestNumber());
+      validateState(ccr);
 
     DiameterMessageImpl msg = (DiameterMessageImpl) ccr;
 
@@ -182,6 +193,7 @@ public class RoClientSessionActivityImpl extends RoSessionActivityImpl implement
     catch (Exception e) {
       throw new IOException("Failed to send message, due to: " + e);
     }
+      incrementRequestNumber();
   }
 
   /*
@@ -252,9 +264,14 @@ public class RoClientSessionActivityImpl extends RoSessionActivityImpl implement
 
   private void validateState(RoCreditControlRequest ccr) {
     //this is used for methods that send specific messages. should be done in jdiam, but there is not hook for it now.
-    if(ccr.getCcRequestType() == null) {
-      throw new DiameterException("No request type is present!!");
-    }
+
+      if(!ccr.hasCcRequestNumber()) {
+          throw new DiameterException("No request number is present!!");
+      }
+
+      if(ccr.getCcRequestType() == null) {
+        throw new DiameterException("No request type is present!!");
+      }
     int t = ccr.getCcRequestType().getValue();
 
     RoSessionState currentState = this.getState();
@@ -267,19 +284,19 @@ public class RoClientSessionActivityImpl extends RoSessionActivityImpl implement
     else if(t == CcRequestType._UPDATE_REQUEST) {
       if(currentState!=RoSessionState.OPEN) {
         //FIXME: change all exception to DiameterException
-        throw new DiameterException("Failed to validate, intial event, wrong state: "+currentState);
+        throw new DiameterException("Failed to validate, update event, wrong state: "+currentState);
       }
     }
     else if(t == CcRequestType._TERMINATION_REQUEST) {
       if(currentState!=RoSessionState.OPEN) {
         //FIXME: change all exception to DiameterException
-        throw new DiameterException("Failed to validate, intial event, wrong state: "+currentState);
+        throw new DiameterException("Failed to validate, termination event, wrong state: "+currentState);
       }
     }
     else if(t == CcRequestType._EVENT_REQUEST) {
       if(currentState!=RoSessionState.IDLE) {
         //FIXME: change all exception to DiameterException
-        throw new DiameterException("Failed to validate, intial event, wrong state: "+currentState);
+        throw new DiameterException("Failed to validate, event request, wrong state: "+currentState);
       }
     }
   }
@@ -287,6 +304,18 @@ public class RoClientSessionActivityImpl extends RoSessionActivityImpl implement
   public void setSession(ClientRoSession session2) {
     this.session = session2;
     this.session.addStateChangeNotification(this);
+  }
+
+  public void setRequestNumber(long requestNumber) {
+    this.requestNumber = requestNumber;
+  }
+
+  public long getRequestNumber() {
+    return this.requestNumber;
+  }
+
+  public long incrementRequestNumber() {
+    return ++requestNumber;
   }
 
   public RoSessionState getState() {

@@ -48,6 +48,7 @@ package net.java.slee.resource.diameter.cca.events.avp;
  *      
  * @author <a href="mailto:baranowb@gmail.com"> Bartosz Baranowski </a>
  * @author <a href="mailto:brainslog@gmail.com"> Alexandre Mendonca </a>
+ * @author <a href="mailto:jacek.stromecki@pro-ids.com"> Jacek Stromecki </a>
  */
 public interface UsedServiceUnitAvp extends RequestedServiceUnitAvp {
 
@@ -73,4 +74,22 @@ public interface UsedServiceUnitAvp extends RequestedServiceUnitAvp {
    */
   public boolean hasTariffChangeUsage();
 
+  /**
+   * Returns the value of the CC-Service-Specific-Units AVP, of type
+   * Unsigned64.
+   * 
+   * @return the value of the CC-Service-Specific-Units AVP
+   */
+  long getCcServiceSpecificUnits();
+  
+  /**
+   * Sets the value of the CC-Service-Specific-Unit, of type Unsigned64.
+   */
+  void setCcServiceSpecificUnits(long ccServiceSpecificUnits);
+  
+  /**
+   * Returns true if the CC-Service-Specific-Unit AVP is present in the message.
+   */
+  boolean hasCcServiceSpecificUnits();
+  
 }

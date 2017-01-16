@@ -33,6 +33,7 @@ import net.java.slee.resource.diameter.cca.events.avp.UsedServiceUnitAvp;
  * 
  * @author <a href="mailto:baranowb@gmail.com"> Bartosz Baranowski </a>
  * @author <a href="mailto:brainslog@gmail.com"> Alexandre Mendonca </a>
+ * @author <a href="jacek.stromecki@pro-ids.com"> Jacek Stromecki </a>
  */
 public class UsedServiceUnitAvpImpl extends ServiceUnitAvpTypeImpl implements UsedServiceUnitAvp {
 
@@ -67,5 +68,34 @@ public class UsedServiceUnitAvpImpl extends ServiceUnitAvpTypeImpl implements Us
   public void setTariffChangeUsage(TariffChangeUsageType tariffChangeUsage) {
     addAvp(CreditControlAVPCodes.Tariff_Change_Usage, tariffChangeUsage.getValue());
   }
+
+	/**
+	 * (non-Javadoc)
+	 *
+	 * @see
+	 * net.java.slee.resource.diameter.cca.events.avp.UsedServiceUnitAvp#getCcServiceSpecificUnits()
+	 */
+	public long getCcServiceSpecificUnits() {
+		return getAvpAsUnsigned64(CreditControlAVPCodes.CC_Service_Specific_Units);
+	}
+
+	/**
+	 * (non-Javadoc)
+	 *
+	 * @see
+	 * net.java.slee.resource.diameter.cca.events.avp.UsedServiceUnitAvp#hasTariffChangeUsage()
+	 */
+	public void setCcServiceSpecificUnits(long ccServiceSpecificUnits) {
+		addAvp(CreditControlAVPCodes.CC_Service_Specific_Units, ccServiceSpecificUnits);
+	}
+
+	/*
+   * (non-Javadoc)
+   * 
+   * @see net.java.slee.resource.diameter.cca.events.avp.UsedServiceUnitAvp#hasCcServiceSpecificUnits()
+	 */
+	public boolean hasCcServiceSpecificUnits() {
+		return hasAvp(CreditControlAVPCodes.CC_Service_Specific_Units);
+	}
 
 }

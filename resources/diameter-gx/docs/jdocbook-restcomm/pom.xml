@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.mobicents.resources</groupId>
 		<artifactId>restcomm-slee-ra-diameter-gx-docs</artifactId>
-		<version>proids-ocp-2.8.4-SNAPSHOT</version>
+		<version>proids-ocp-2.8.4</version>
 	</parent>
 
 	<artifactId>restcomm-slee-ra-diameter-gx-docs-jdocbook-restcomm</artifactId>

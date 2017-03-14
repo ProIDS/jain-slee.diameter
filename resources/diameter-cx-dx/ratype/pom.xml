@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.mobicents.resources</groupId>
 		<artifactId>restcomm-slee-ra-diameter-cx-dx</artifactId>
-		<version>proids-ocp-2.8.5-SNAPSHOT</version>
+		<version>proids-ocp-2.8.5</version>
 	</parent>
 
 	<artifactId>restcomm-slee-ra-diameter-cx-dx-ratype</artifactId>

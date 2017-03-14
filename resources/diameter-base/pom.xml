@@ -26,8 +26,8 @@
 
 	<properties>
 		<!-- Mobicents Diameter Components Versions -->
-		<restcomm.diameter.jdiameter.version>proids-ocp-1.7.2</restcomm.diameter.jdiameter.version>
-		<restcomm.diameter.mux.version>proids-ocp-1.7.2</restcomm.diameter.mux.version>
+		<restcomm.diameter.jdiameter.version>proids-ocp-1.7.7</restcomm.diameter.jdiameter.version>
+		<restcomm.diameter.mux.version>proids-ocp-1.7.7</restcomm.diameter.mux.version>
 		<restcomm.slee.version>2.8.26</restcomm.slee.version>
 		<!-- Documentation Related Properties -->
 		<docs.profile>restcomm</docs.profile>

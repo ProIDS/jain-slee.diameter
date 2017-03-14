@@ -45,3 +45,4 @@ Thumbs.db
 ######## VM crash logs #########
 ################################
 hs_err_pid*
+*.versionsBackup
